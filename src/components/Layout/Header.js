@@ -11,6 +11,7 @@ import Badge from "@mui/material/Badge";
 import ContactPageIcon from "@mui/icons-material/ContactPage";
 import "./Header.css";
 import DrawerMenu from "./DrawerMenu";
+import AuthMenu from "./AuthMenu";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -77,7 +78,9 @@ const Header = () => {
               </Link>
             </Tooltip>
           </div>
-          <div className="auth-area">dwd</div>
+          <div className="auth-area">
+            <AuthMenu />
+          </div>
         </div>
       </div>
     </header>
