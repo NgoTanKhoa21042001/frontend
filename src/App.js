@@ -25,7 +25,6 @@ function App() {
         theme="colored"
       />
       {/* Same as */}
-      <ToastContainer />
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Aboutus />} />

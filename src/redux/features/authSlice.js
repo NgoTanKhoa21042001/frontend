@@ -78,4 +78,6 @@ const authSlice = createSlice({
   },
 });
 
+export const selectLoggedInUser = (state) => state.auth.credentials;
+
 export default authSlice.reducer;
