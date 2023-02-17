@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate, useLocation } from "react-router-dom";
-
-// import {
-//   login,
-//   selectLoggedInUser,
-//   persistLogin,
-// } from "../../redux/features/authSlice";
 
 import {
   Box,
@@ -22,7 +16,10 @@ import {
   Link,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { login } from "../../redux/features/authSlice";
 const Login = () => {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checked, setChecked] = useState(false);
@@ -30,7 +27,15 @@ const Login = () => {
     setChecked(!checked);
     //   dispatch(persistLogin(!checked));
   };
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const jsonData = {
+      email,
+      password,
+    };
+    dispatch(login({ jsonData, toast }));
+  };
   return (
     <>
       <Box

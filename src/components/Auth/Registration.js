@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate, useLocation } from "react-router-dom";
 
 // import {
@@ -26,18 +26,19 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PhotoIcon from "@mui/icons-material/Photo";
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { registration } from "../../redux/features/authSlice";
 const Registration = () => {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checked, setChecked] = useState(false);
   const [previewAvatar, setPreviewAvatar] = useState("");
-  const handleKeepMeLoggedIn = async (e) => {
-    setChecked(!checked);
-    //   dispatch(persistLogin(!checked));
-  };
+  const [avatar, setAvatar] = useState("");
+
   const imageHandler = (e) => {
     if (e.target.name === "avatar") {
+      setAvatar(e.target.files);
       const reader = new FileReader();
 
       reader.onload = () => {
@@ -45,19 +46,30 @@ const Registration = () => {
           setPreviewAvatar(reader.result);
         }
       };
+      // phương thức readAsDataURL() được gọi để đọc nội dung của tệp đã chọn
       reader.readAsDataURL(e.target.files[0]);
       console.log(reader);
     }
   };
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!avatar) {
+      toast.warn("Please select a profile avatar");
+      return false;
+    }
 
-    const jsonData = {
-      name,
-      email,
-      password,
-    };
-    console.log(jsonData);
+    const formData = new FormData();
+    formData.set("name", name);
+    formData.set("email", email);
+    formData.set("password", password);
+    Object.keys(avatar).forEach((key) => {
+      formData.append(avatar.item(key).name, avatar.item(key));
+    });
+    dispatch(registration({ formData, toast }));
+  };
+  const handleKeepMeLoggedIn = async (e) => {
+    setChecked(!checked);
+    //   dispatch(persistLogin(!checked));
   };
   return (
     <>

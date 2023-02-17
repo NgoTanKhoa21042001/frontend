@@ -5,9 +5,27 @@ import MainLayout from "./components/Layout/MainLayout";
 import Aboutus from "./components/Pages/Aboutus";
 import Contactus from "./components/Pages/Contactus";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function App() {
   return (
     <div className="App">
+      {/* toasity  */}
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+      {/* Same as */}
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<Aboutus />} />
