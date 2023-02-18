@@ -17,3 +17,16 @@ Ví dụ: Nếu object avatar có các keys là "avatar_1" và "avatar_2" và gi
 # jwt-decode
 
 Thư viện jwt-decode cung cấp một cách đơn giản để giải mã các token JWT, cho phép truy cập vào các thông tin trong phần payload mà không cần giải mã signature. Nó được sử dụng trong các ứng dụng JavaScript để xác thực người dùng hoặc cho phép truy cập vào các tài nguyên an toàn.
+
+==============================
+
+# Typography
+
+Trong Mui, Typography được sử dụng để hiển thị các đoạn văn bản trong các ứng dụng web
+Typography còn cung cấp nhiều thuộc tính cho phép tùy chỉnh các kiểu chữ, ví dụ như:
+
+- variant: định nghĩa kiểu chữ được sử dụng. Các giá trị có thể là "h1" đến "h6", "subtitle1", "subtitle2", "body1", "body2", "caption", "button", "overline".
+- align: định nghĩa căn lề của đoạn văn bản.
+- color: định nghĩa màu sắc của đoạn văn bản.
+- noWrap: cho phép vô hiệu hóa việc ngắt dòng tự động.
+- gutterBottom: cho phép thêm khoảng trắng dưới đoạn văn bản.

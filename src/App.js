@@ -7,7 +7,8 @@ import Contactus from "./components/Pages/Contactus";
 import UserProfile from "./components/Auth/UserProfile";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ProtectedRoute from "./components/Routes/ProtectedRoute";
+import AuthenticatedRoute from "./components/Routes/AuthenticatedRoute";
+import AuthorizedRoute from "./components/Routes/AuthorizedRoute";
 
 function App() {
   return (
@@ -31,8 +32,9 @@ function App() {
           <Route index element={<Aboutus />} />
           <Route path="contact-us" element={<Contactus />} />
           <Route path="auth" element={<Auth />} />
-          <Route path="/" element={<ProtectedRoute />}>
+          <Route path="/" element={<AuthenticatedRoute />}>
             <Route path="profile" element={<UserProfile />} />
+            <Route path="/" element={<AuthorizedRoute />} />
           </Route>
         </Route>
       </Routes>
