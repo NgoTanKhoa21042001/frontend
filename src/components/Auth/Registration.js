@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { useNavigate, useLocation } from "react-router-dom";
-
-// import {
-//   login,
-//   selectLoggedInUser,
-//   persistLogin,
-// } from "../../redux/features/authSlice";
 
 import {
   Box,
@@ -25,7 +18,6 @@ import NoAccountsIcon from "@mui/icons-material/NoAccounts";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PhotoIcon from "@mui/icons-material/Photo";
 
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { registration } from "../../redux/features/authSlice";
 const Registration = () => {
   const dispatch = useDispatch();
@@ -131,10 +123,11 @@ const Registration = () => {
                   bgcolor: "primary.main",
                   width: "80px",
                   height: "80px",
+                  fontSize: "5.35rem",
                 }}
               >
                 {!previewAvatar ? (
-                  <AccountCircleIcon />
+                  <AccountCircleIcon fontSize="2.5rem" />
                 ) : (
                   <img
                     src={previewAvatar}

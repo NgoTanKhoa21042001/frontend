@@ -3,6 +3,8 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import jwtDecode from "jwt-decode";
 import { useSelector, useDispatch } from "react-redux";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
@@ -10,18 +12,14 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import SummarizeIcon from "@mui/icons-material/Summarize";
-import PersonIcon from "@mui/icons-material/Person";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
-import Settings from "@mui/icons-material/Settings";
-import Logout from "@mui/icons-material/Logout";
-import { selectLoggedInUser } from "../../redux/features/authSlice";
+import { logout, selectLoggedInUser } from "../../redux/features/authSlice";
 import { IMAGE_BASEURL } from "../constants/baseUrl";
 
 // dấu chấm xanh hoạt động của avatar
@@ -58,6 +56,11 @@ const AuthMenu = () => {
   const dispatch = useDispatch();
 
   const { user, accessToken } = useSelector(selectLoggedInUser);
+  let role;
+  if (accessToken) {
+    const { UserInfo } = jwtDecode(accessToken);
+    role = UserInfo.roles[0];
+  }
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -70,7 +73,10 @@ const AuthMenu = () => {
   const profile = () => navigate("/profile");
   const orders = () => navigate("/orders");
   const dashboard = () => navigate("/dashboard");
-  const logout = () => navigate("/logout");
+  const logoutUser = () => {
+    dispatch(logout({ toast }));
+    navigate("/");
+  };
   const auth = () => navigate("/auth");
   return (
     <>
@@ -141,14 +147,18 @@ const AuthMenu = () => {
           transformOrigin={{ horizontal: "right", vertical: "top" }}
           anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
         >
-          <MenuItem onClick={dashboard}>
-            <ListItemIcon>
-              <DashboardIcon fontSize="small" />
-            </ListItemIcon>
-            Dashhboard
-          </MenuItem>
+          {role !== "user" ? (
+            <MenuItem onClick={dashboard}>
+              <ListItemIcon>
+                <DashboardIcon fontSize="small" />
+              </ListItemIcon>
+              Dashhboard
+            </MenuItem>
+          ) : (
+            ""
+          )}
+
           {/* dấu gạch chân */}
-          <Divider />
           <Divider />
           <MenuItem onClick={orders}>
             <ListItemIcon>
@@ -164,7 +174,7 @@ const AuthMenu = () => {
             Profile
           </MenuItem>
           <Divider />
-          <MenuItem onClick={logout}>
+          <MenuItem onClick={logoutUser}>
             <ListItemIcon>
               <LoginOutlinedIcon fontSize="small" />
             </ListItemIcon>
