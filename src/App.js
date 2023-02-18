@@ -9,6 +9,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AuthenticatedRoute from "./components/Routes/AuthenticatedRoute";
 import AuthorizedRoute from "./components/Routes/AuthorizedRoute";
+import UpdatePassword from "./components/Auth/UpdatePassword";
+import UpdateProfile from "./components/Auth/UpdateProfile";
 
 function App() {
   return (
@@ -34,6 +36,9 @@ function App() {
           <Route path="auth" element={<Auth />} />
           <Route path="/" element={<AuthenticatedRoute />}>
             <Route path="profile" element={<UserProfile />} />
+            <Route path="me/update" element={<UpdateProfile />} />
+            <Route path="password/update" element={<UpdatePassword />} />
+
             <Route path="/" element={<AuthorizedRoute />} />
           </Route>
         </Route>
