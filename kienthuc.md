@@ -29,4 +29,10 @@ Typography còn cung cấp nhiều thuộc tính cho phép tùy chỉnh các ki�
 - align: định nghĩa căn lề của đoạn văn bản.
 - color: định nghĩa màu sắc của đoạn văn bản.
 - noWrap: cho phép vô hiệu hóa việc ngắt dòng tự động.
-- gutterBottom: cho phép thêm khoảng trắng dưới đoạn văn bản.
+- # gutterBottom: cho phép thêm khoảng trắng dưới đoạn văn bản.
+
+credentials là một object chứa thông tin về thông tin xác thực,
+
+- withCredentials: Cấu hình này cho phép Axios gửi cookie khi yêu cầu HTTP được gửi đến máy chủ. Điều này cần thiết khi muốn duy trì phiên làm việc cho người dùng.
+
+- headers: Đây là đối tượng chứa các thông tin về tiêu đề yêu cầu HTTP. Trong đoạn mã này, tiêu đề 'Content-Type' được thiết lập là 'application/json', cho biết rằng các yêu cầu được gửi là các đối tượng JSON.

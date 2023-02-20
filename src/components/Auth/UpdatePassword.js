@@ -2,13 +2,41 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+
 import { Box, Typography, TextField, Button } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
+import {
+  changePassword,
+  resetMutationResult,
+  selectMutationResult,
+} from "../../redux/features/authSlice";
 const UpdatePassword = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // - Khi ta gọi useSelector(selectMutationResult), hook useSelector sẽ lấy giá trị của selector selectMutationResult từ Redux store và trả về nó. Kết quả của hook này là một object có hai thuộc tính là loading và success.
+  const { loading, success } = useSelector(selectMutationResult);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (newPassword !== confirmPassword) {
+      toast.warn("New & old password not matched");
+      return;
+    }
+    const jsonData = {
+      newPassword,
+      oldPassword,
+    };
+    dispatch(changePassword({ jsonData, toast }));
+  };
+  useEffect(() => {
+    if (success) {
+      dispatch(resetMutationResult());
+      navigate("/profile");
+    }
+  }, [success, navigate, dispatch]);
   return (
     <Box sx={{ maxWidth: "550px", m: "0 auto", textAlign: "center" }}>
       {" "}
@@ -39,7 +67,6 @@ const UpdatePassword = () => {
             margin="normal"
             required
             fullWidth
-            autoFocus
             value={oldPassword}
             onChange={(e) => setOldPassword(e.target.value)}
           />
@@ -68,7 +95,7 @@ const UpdatePassword = () => {
           <Button
             type="submit"
             fullWidth
-            // disabled={loading ? true : false}
+            disabled={loading ? true : false}
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >

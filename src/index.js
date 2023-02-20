@@ -5,7 +5,9 @@ import App from "./App";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store";
+import { injectStore } from "./redux/axiosPrivate";
 
+injectStore(store);
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
