@@ -79,6 +79,24 @@ export const changePassword = createAsyncThunk(
     }
   }
 );
+export const updateProfile = createAsyncThunk(
+  "auth/updateProfile",
+  // formData is an object that contains data to be sent to the server
+  async ({ formData, toast }, { rejectWithValue }) => {
+    try {
+      // the axiosPublic library is used to make a POST request to a URL /register with formData as the payload
+      //  If the request is successful, the data property of the response is extracted using destructuring assignment,
+      const { data } = await axiosPrivate.put(`/me/update`, formData, {
+        headers: { "Content-type": "multipart/form-data" },
+      });
+      toast.success("Successfully updated.");
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
 // Đây là đoạn code sử dụng thư viện Redux Toolkit để tạo một "slice" của Redux store để quản lý trạng thái liên quan đến việc xác thực (authentication).
 const authSlice = createSlice({
   name: "auth",
@@ -137,6 +155,19 @@ const authSlice = createSlice({
     },
     [changePassword.rejected]: (state, action) => {
       state.mutationResult.loading = false;
+    },
+    //update profile
+    [updateProfile.pending]: (state, action) => {
+      state.mutationResult.loading = true;
+    },
+    [updateProfile.fulfilled]: (state, action) => {
+      state.mutationResult.loading = false;
+      state.mutationResult.success = action.payload.success;
+      state.credentials.user = action.payload.user;
+    },
+    [updateProfile.rejected]: (state, action) => {
+      state.mutationResult.loading = false;
+      state.credentials.error = action.payload;
     },
   },
 });

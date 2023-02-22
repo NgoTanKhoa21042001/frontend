@@ -14,6 +14,8 @@ const axiosPrivate = axios.create({
 
 axiosPrivate.interceptors.request.use(
   (config) => {
+    // - Hàm xử lý cho các yêu cầu thành công. Hàm này nhận vào đối tượng config chứa thông tin về yêu cầu, ví dụ như tiêu đề, phương thức, thân yêu cầu, v.v. Đối tượng config này sẽ được trả về sau khi được xử lý xong.
+    //  được sử dụng để trích xuất mã thông báo truy cập từ trạng thái ứng dụng thông qua thư viện Redux. Nó sử dụng toán tử optional chaining để đảm bảo rằng các thuộc tính không được xác định hoặc nullish (null hoặc undefined) sẽ không gây ra lỗi. Nếu tất cả các thuộc tính đều tồn tại, thì giá trị của accessToken sẽ là mã thông báo truy cập, ngược lại thì giá trị sẽ là undefined.
     const accessToken = store?.getState()?.auth?.credentials?.accessToken;
     if (accessToken) {
       console.log(accessToken);

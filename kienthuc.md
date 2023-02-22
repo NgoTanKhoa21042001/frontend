@@ -36,3 +36,9 @@ credentials là một object chứa thông tin về thông tin xác thực,
 - withCredentials: Cấu hình này cho phép Axios gửi cookie khi yêu cầu HTTP được gửi đến máy chủ. Điều này cần thiết khi muốn duy trì phiên làm việc cho người dùng.
 
 - headers: Đây là đối tượng chứa các thông tin về tiêu đề yêu cầu HTTP. Trong đoạn mã này, tiêu đề 'Content-Type' được thiết lập là 'application/json', cho biết rằng các yêu cầu được gửi là các đối tượng JSON.
+
+# Form data:
+
+FormData là một interface mới được HTML5 giới thiệu trong Web API. Hầu hết chúng ta đã từng chặn hoặc chỉnh sửa dữ liệu khi submit form với Jquery . FormData là một Web API interface, cung cấp cho ta một cách tiếp cận khác với việc xử lý form. Việc sử dụng FormData cũng giống với việc xử dụng ajax jquery.
+
+Phương thức append cho phép chúng ta chèn thêm một cặp key => value vào trong FormData
