@@ -42,3 +42,5 @@ credentials là một object chứa thông tin về thông tin xác thực,
 FormData là một interface mới được HTML5 giới thiệu trong Web API. Hầu hết chúng ta đã từng chặn hoặc chỉnh sửa dữ liệu khi submit form với Jquery . FormData là một Web API interface, cung cấp cho ta một cách tiếp cận khác với việc xử lý form. Việc sử dụng FormData cũng giống với việc xử dụng ajax jquery.
 
 Phương thức append cho phép chúng ta chèn thêm một cặp key => value vào trong FormData
+
+flexGrow: 1 là một thuộc tính trong CSS để thiết lập độ rộng linh hoạt cho một phần tử trong một layout dựa trên phương pháp flexbox. Ví dụ, nếu có hai phần tử trong một container, phần tử thứ nhất có flex-grow: 1 và phần tử thứ hai không có thuộc tính flex-grow, phần tử đầu tiên sẽ mở rộng để điền vào toàn bộ không gian còn lại trong container sau khi phần tử thứ hai đã được đặt vị trí của nó.
