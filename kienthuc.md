@@ -44,3 +44,7 @@ FormData là một interface mới được HTML5 giới thiệu trong Web API. 
 Phương thức append cho phép chúng ta chèn thêm một cặp key => value vào trong FormData
 
 flexGrow: 1 là một thuộc tính trong CSS để thiết lập độ rộng linh hoạt cho một phần tử trong một layout dựa trên phương pháp flexbox. Ví dụ, nếu có hai phần tử trong một container, phần tử thứ nhất có flex-grow: 1 và phần tử thứ hai không có thuộc tính flex-grow, phần tử đầu tiên sẽ mở rộng để điền vào toàn bộ không gian còn lại trong container sau khi phần tử thứ hai đã được đặt vị trí của nó.
+
+jsonData là một đối tượng JavaScript được sử dụng để biểu diễn dữ liệu dưới dạng chuỗi JSON (JavaScript Object Notation). Nó thường được sử dụng để gửi dữ liệu từ client lên server thông qua các request HTTP như GET hoặc POST. Để gửi dữ liệu dưới dạng jsonData, ta cần sử dụng phương thức POST và đặt jsonData vào phần body của request.
+
+Trong khi đó, formData là một đối tượng JavaScript được sử dụng để biểu diễn dữ liệu dưới dạng key-value pairs. Nó thường được sử dụng để gửi dữ liệu từ client lên server thông qua phương thức POST. Để gửi dữ liệu dưới dạng formData, ta cần sử dụng phương thức POST và đặt formData vào phần body của request.
