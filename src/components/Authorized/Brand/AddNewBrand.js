@@ -19,7 +19,9 @@ import {
   resetMutationResult,
   selectBrandMutationResult,
 } from "../../../redux/features/brandSlice";
+import { useNavigate } from "react-router";
 const AddNewBrand = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading, success } = useSelector(selectBrandMutationResult);
   const [title, setTitle] = useState("");
@@ -28,6 +30,7 @@ const AddNewBrand = () => {
     e.preventDefault();
     const jsonData = { title, description };
     dispatch(addBrand({ jsonData, toast }));
+    navigate("/authorized/brandlist");
   };
   useEffect(() => {
     if (success) {

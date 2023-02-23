@@ -19,7 +19,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { login } from "../../redux/features/authSlice";
 const Login = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [checked, setChecked] = useState(false);
@@ -35,6 +35,7 @@ const Login = () => {
       password,
     };
     dispatch(login({ jsonData, toast }));
+    navigate("/");
   };
   return (
     <>
