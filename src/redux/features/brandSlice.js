@@ -52,6 +52,36 @@ export const deleteBrand = createAsyncThunk(
     }
   }
 );
+// brand details
+export const brandDetails = createAsyncThunk(
+  "brand/brandDetails",
+  // formData is an object that contains data to be sent to the server
+  async ({ id, toast }, { rejectWithValue }) => {
+    try {
+      // the axiosPublic library is used to make a POST request to a URL /register with formData as the payload
+      //  If the request is successful, the data property of the response is extracted using destructuring assignment,
+      const { data } = await axiosPublic.get(`/brands/${id}`);
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const updateBrand = createAsyncThunk(
+  "brand/updateBrand",
+  async ({ id, jsonData, toast }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPrivate.put(`/brands/${id}`, jsonData);
+      toast.success("Brand updated.");
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
 // Đây là đoạn code sử dụng thư viện Redux Toolkit để tạo một "slice" của Redux store để quản lý trạng thái liên quan đến việc xác thực (authentication).
 const brandSlice = createSlice({
   name: "brand",
@@ -100,6 +130,30 @@ const brandSlice = createSlice({
       state.mutationResult.success = action.payload.success;
     },
     [deleteBrand.rejected]: (state, action) => {
+      state.mutationResult.loading = false;
+      state.mutationResult.error = action.payload;
+    },
+    //get brand details
+    [brandDetails.pending]: (state, action) => {
+      state.brandDetails.loading = true;
+    },
+    [brandDetails.fulfilled]: (state, action) => {
+      state.brandDetails.loading = false;
+      state.brandDetails.brand = action.payload.brand;
+    },
+    [brandDetails.rejected]: (state, action) => {
+      state.brandDetails.loading = false;
+      state.brandDetails.error = action.payload;
+    },
+    //update brand
+    [updateBrand.pending]: (state, action) => {
+      state.mutationResult.loading = true;
+    },
+    [updateBrand.fulfilled]: (state, action) => {
+      state.mutationResult.loading = false;
+      state.mutationResult.success = action.payload.success;
+    },
+    [updateBrand.rejected]: (state, action) => {
       state.mutationResult.loading = false;
       state.mutationResult.error = action.payload;
     },

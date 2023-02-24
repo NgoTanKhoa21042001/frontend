@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
 import {
   deleteBrand,
   getBrands,
@@ -9,17 +8,15 @@ import {
   selectAllBrands,
   selectBrandMutationResult,
 } from "../../../redux/features/brandSlice";
+import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
-import BoxShadowLoader from "../../Skeletons/BoxShadowLoader";
-import { Box, IconButton, Link, Tooltip, Typography } from "@mui/material";
+import { Box, Typography, IconButton, Tooltip } from "@mui/material";
+import DeleteForeeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
-
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import "../../../App.css";
-import { useNavigate } from "react-router";
+import BoxShadowLoader from "../../../components/Skeletons/BoxShadowLoader";
 
 const BrandList = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { loading, brands } = useSelector(selectAllBrands);
   const { success } = useSelector(selectBrandMutationResult);
@@ -27,6 +24,7 @@ const BrandList = () => {
   const deleteHandler = (id) => {
     dispatch(deleteBrand({ id, toast }));
   };
+
   const columns = [
     {
       field: "title",
@@ -43,8 +41,8 @@ const BrandList = () => {
       minWidth: 250,
     },
     {
-      field: "action",
-      headerName: "Action",
+      field: "actions",
+      headerName: "Actions",
       headerClassName: "gridHeader",
       flex: 0.5,
       minWidth: 80,
@@ -56,22 +54,18 @@ const BrandList = () => {
             <Link to={`/authorized/brand/${params.getValue(params.id, "id")}`}>
               <Tooltip title="Edit" placement="top">
                 <EditIcon
-                  sx={{
-                    width: "30px",
-                    height: "30px",
-                    color: "#88acbc",
-                    cursor: "pointer",
-                  }}
+                  sx={{ width: "30px", height: "30px", color: "#1976d2" }}
                 />
               </Tooltip>
             </Link>
+
             <Tooltip title="Delete" placement="top">
               <IconButton
                 color="error"
                 component="span"
                 onClick={() => deleteHandler(params.getValue(params.id, "id"))}
               >
-                <DeleteForeverIcon />
+                <DeleteForeeverIcon sx={{ width: "30px", height: "30px" }} />
               </IconButton>
             </Tooltip>
           </>
@@ -79,8 +73,6 @@ const BrandList = () => {
       },
     },
   ];
-
-  // push vào list brands
   const rows = [];
   brands &&
     brands.forEach((brand) => {
@@ -90,13 +82,13 @@ const BrandList = () => {
         description: brand.description,
       });
     });
-  // truong Hợp success
   useEffect(() => {
     if (success) {
       dispatch(resetMutationResult());
     }
     dispatch(getBrands({ toast }));
   }, [dispatch, success]);
+
   return (
     <Box
       style={{
@@ -107,7 +99,7 @@ const BrandList = () => {
         textAlign: "center",
       }}
     >
-      <Typography component="h1" variant="h5" sx={{ mb: 4 }}>
+      <Typography component="h1" variant="h5" sx={{ m: 4 }}>
         Full list of brands
       </Typography>
       {loading ? (
