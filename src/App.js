@@ -15,6 +15,10 @@ import Dashboard from "./components/Authorized/Dashboard/Dashboard";
 import AddNewBrand from "./components/Authorized/Brand/AddNewBrand";
 import BrandList from "./components/Authorized/Brand/BrandList";
 import UpdateBrand from "./components/Authorized/Brand/UpdateBrand";
+import AddNewCategory from "./components/Authorized/Category/AddNewCategory";
+import CategoryList from "./components/Authorized/Category/CategoryList";
+import UpdateCategory from "./components/Authorized/Category/UpdateCategory";
+import AddNewStore from "./components/Authorized/Store/AddNewStore";
 
 function App() {
   return (
@@ -49,6 +53,12 @@ function App() {
               <Route path="brand" element={<AddNewBrand />} />
               <Route path="brandlist" element={<BrandList />} />
               <Route path="brand/:id" element={<UpdateBrand />} />
+
+              <Route path="category" element={<AddNewCategory />} />
+              <Route path="categorylist" element={<CategoryList />} />
+              <Route path="category/:id" element={<UpdateCategory />} />
+
+              <Route path="store" element={<AddNewStore />} />
             </Route>
           </Route>
         </Route>
