@@ -19,6 +19,7 @@ import AddNewCategory from "./components/Authorized/Category/AddNewCategory";
 import CategoryList from "./components/Authorized/Category/CategoryList";
 import UpdateCategory from "./components/Authorized/Category/UpdateCategory";
 import AddNewStore from "./components/Authorized/Store/AddNewStore";
+import StoreList from "./components/Authorized/Store/StoreList";
 
 function App() {
   return (
@@ -59,6 +60,7 @@ function App() {
               <Route path="category/:id" element={<UpdateCategory />} />
 
               <Route path="store" element={<AddNewStore />} />
+              <Route path="storelist" element={<StoreList />} />
             </Route>
           </Route>
         </Route>

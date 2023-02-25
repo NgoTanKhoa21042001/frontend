@@ -17,6 +17,7 @@ import {
 const UpdateBrand = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  console.log(id);
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -28,6 +29,7 @@ const UpdateBrand = () => {
   useEffect(() => {
     if (success) {
       dispatch(resetMutationResult());
+      console.log(resetMutationResult);
     }
     dispatch(brandDetails({ id, toast }));
   }, [dispatch, id, success]);

@@ -1,198 +1,274 @@
-// import React, { useState, useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { toast } from "react-toastify";
-// import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 
-// import {
-//   Box,
-//   Typography,
-//   TextField,
-//   Button,
-//   TextareaAutosize,
-//   Grid,
-//   Avatar,
-// } from "@mui/material";
-// import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
-// import InsertPhotoRoundedIcon from "@mui/icons-material/InsertPhotoRounded";
-// import PhotoIcon from "@mui/icons-material/Photo";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  TextareaAutosize,
+  Grid,
+  Avatar,
+} from "@mui/material";
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import InsertPhotoRoundedIcon from "@mui/icons-material/InsertPhotoRounded";
+import PhotoIcon from "@mui/icons-material/Photo";
 
-// import {
-//   addStore,
-//   resetMutationResult,
-//   selectStoreMutationResult,
-// } from "../../../redux/features/storeSlice";
-// import { useNavigate } from "react-router";
-// const AddNewStore = () => {
-//   const navigate = useNavigate();
-//   const dispatch = useDispatch();
-//   const { loading, success } = useSelector(selectStoreMutationResult);
-//   const [title, setTitle] = useState("");
-//   const [description, setDescription] = useState("");
-//   const [address, setAddress] = useState("");
-//   const [city, setCity] = useState("");
-//   const [zipCode, setZipCode] = useState("");
-//   const [state, setState] = useState("");
-//   const [country, setCountry] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [phone, setPhone] = useState("");
-//   const [previewLogo, setPreviewLogo] = useState("");
-//   const [logo, setLogo] = useState("");
+import {
+  addStore,
+  resetMutationResult,
+  selectStoreMutationResult,
+} from "../../../redux/features/storeSlice";
+import { useNavigate } from "react-router";
+import { IMAGE_BASEURL } from "../../constants/baseUrl";
+const AddNewStore = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, success } = useSelector(selectStoreMutationResult);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [zipCode, setZipCode] = useState("");
+  const [state, setState] = useState("");
+  const [country, setCountry] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [previewLogo, setPreviewLogo] = useState("");
+  const [logo, setLogo] = useState("");
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     const jsonData = { title, description };
-//     dispatch(addStore({ jsonData, toast }));
-//     navigate("/authorized/categorylist");
-//   };
-//   useEffect(() => {
-//     if (success) {
-//       dispatch(resetMutationResult());
-//       setTitle("");
-//       setDescription("");
-//     }
-//   }, [success, dispatch]);
-//   return (
-//     <Box
-//       sx={{
-//         display: "flex",
-//         flexDirection: "column",
-//         alignItems: "center",
-//         marginTop: 2,
-//       }}
-//     >
-//       {" "}
-//       <Typography component="div" variant="h5">
-//         Add new store
-//       </Typography>
-//       <Box component="form" onSubmit={handleSubmit}>
-//         <TextField
-//           type="text"
-//           id="title"
-//           label="Title"
-//           name="title"
-//           margin="normal"
-//           required
-//           fullWidth
-//           autoFocus
-//           value={title}
-//           onChange={(e) => setTitle(e.target.value)}
-//         />
+  const imageHandler = (e) => {
+    if (e.target.name === "logo") {
+      setLogo(e.target.files);
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          // gán url
+          setPreviewLogo(reader.result);
+        }
+      };
+      // đọc url hiển thị ra hình ảnh
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("address", address);
+    formData.append("city", city);
+    formData.append("zipCode", zipCode);
+    formData.append("state", state);
+    formData.append("country", country);
+    formData.append("email", email);
+    formData.append("phone", phone);
+    // Cuối cùng, hàm gọi một hàm được gọi là addStore thông qua phương thức dispatch để gửi dữ liệu trong formData lên server. Hàm addStore được truyền vào một đối tượng với hai thuộc tính là formData và toast. formData chứa dữ liệu của biểu mẫu, trong trường hợp này là file hình ảnh. toast được sử dụng để hiển thị thông báo thành công hoặc thất bại khi gửi dữ liệu.
+    Object.keys(logo).forEach((key) => {
+      formData.append(logo.item(key).name, logo.item(key));
+      console.log(logo.item(key).name);
+      console.log(logo.item(key));
+    });
+    dispatch(addStore({ formData, toast }));
+  };
+  useEffect(() => {
+    if (success) {
+      dispatch(resetMutationResult());
+      setTitle("");
+      setDescription("");
+      setAddress("");
+      setCity("");
+      setZipCode("");
+      setCountry("");
+      setState("");
+      setEmail("");
+      setPhone("");
+      setPreviewLogo("");
+      setLogo("");
+    }
+  }, [success, dispatch]);
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        marginTop: 2,
+      }}
+    >
+      {" "}
+      <Typography component="div" variant="h5">
+        Add new store
+      </Typography>
+      <Box component="form" onSubmit={handleSubmit}>
+        <TextField
+          type="text"
+          id="title"
+          label="Title"
+          name="title"
+          margin="normal"
+          required
+          fullWidth
+          autoFocus
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
 
-//         <TextField
-//           type="text"
-//           id="description"
-//           label="Description"
-//           name="description"
-//           margin="normal"
-//           required
-//           fullWidth
-//           autoFocus
-//           value={description}
-//           onChange={(e) => setDescription(e.target.value)}
-//         />
-//         <TextareaAutosize
-//           required
-//           aria-label="address"
-//           minRows={5}
-//           placeholder="Address"
-//           value={address}
-//           style={{ width: "100%", marginTop: "16px" }}
-//           onChange={(e) => setAddress(e.target.value)}
-//         />
-//         <Grid container spacing={2}>
-//           <Grid item sx={6}>
-//             <TextField
-//               type="text"
-//               id="city"
-//               label="City"
-//               name="city"
-//               margin="normal"
-//               required
-//               fullWidth
-//               value={city}
-//               onChange={(e) => setCity(e.target.value)}
-//             />
-//           </Grid>
-//           <Grid item sx={6}>
-//             <TextField
-//               type="text"
-//               id="zipCode"
-//               label="Zip"
-//               name="zipCode"
-//               margin="normal"
-//               required
-//               fullWidth
-//               value={zipCode}
-//               onChange={(e) => setZipCode(e.target.value)}
-//             />
-//           </Grid>
-//         </Grid>
-//         <Grid container spacing={2}>
-//           <Grid item xs={6}>
-//             <CountryDropdown
-//               classes="ship-drop-down"
-//               defaultOptionLabel="Select a Country"
-//               style={{ width: "100%" }}
-//               value={country}
-//               valueType="short"
-//               priorityOptions={["CA", "US", "IN", "GB"]}
-//               onChange={(e) => setCountry(e)}
-//             />
-//           </Grid>
-//           <Grid item xs={6}>
-//             <RegionDropdown
-//               classes="ship-drop-down"
-//               defaultOptionLabel="Now select a region"
-//               blankOptionLabel="No country selected"
-//               style={{ width: "100%" }}
-//               value={state}
-//               country={country}
-//               countryValueType="short"
-//               onChange={(e) => setState(e)}
-//             />
-//           </Grid>
-//         </Grid>
-//         <Grid container spacing={2}>
-//           <Grid item xs={6}>
-//             <TextField
-//               type="email"
-//               id="email"
-//               label="Email"
-//               name="email"
-//               margin="normal"
-//               required
-//               fullWidth
-//               value={email}
-//               onChange={(e) => setEmail(e.target.value)}
-//             />
-//           </Grid>
-//           <Grid item xs={6}>
-//             <TextField
-//               type="text"
-//               id="phone"
-//               label="Phone"
-//               name="phone"
-//               margin="normal"
-//               required
-//               fullWidth
-//               value={phone}
-//               onChange={(e) => setPhone(e.target.value)}
-//             />
-//           </Grid>
-//         </Grid>
-//         <Button
-//           type="submit"
-//           fullWidth
-//           disabled={loading ? true : false}
-//           variant="contained"
-//           startIcon={<AddBoxOutlinedIcon />}
-//           sx={{ mt: 3, mb: 2 }}
-//         >
-//           Add Store
-//         </Button>
-//       </Box>
-//     </Box>
-//   );
-// };
+        <TextField
+          type="text"
+          id="description"
+          label="Description"
+          name="description"
+          margin="normal"
+          required
+          fullWidth
+          autoFocus
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <TextareaAutosize
+          required
+          aria-label="address"
+          minRows={5}
+          placeholder="Address"
+          value={address}
+          style={{ width: "100%", marginTop: "16px" }}
+          onChange={(e) => setAddress(e.target.value)}
+        />
+        <Grid container spacing={2}>
+          <Grid item sx={6}>
+            <TextField
+              type="text"
+              id="city"
+              label="City"
+              name="city"
+              margin="normal"
+              required
+              fullWidth
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            />
+          </Grid>
+          <Grid item sx={6}>
+            <TextField
+              type="text"
+              id="zipCode"
+              label="Zip"
+              name="zipCode"
+              margin="normal"
+              required
+              fullWidth
+              value={zipCode}
+              onChange={(e) => setZipCode(e.target.value)}
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <CountryDropdown
+              classes="ship-drop-down"
+              defaultOptionLabel="Select a Country"
+              style={{ width: "100%" }}
+              value={country}
+              valueType="short"
+              priorityOptions={["CA", "US", "IN", "GB"]}
+              onChange={(e) => setCountry(e)}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <RegionDropdown
+              classes="ship-drop-down"
+              defaultOptionLabel="Now select a region"
+              blankOptionLabel="No country selected"
+              style={{ width: "100%" }}
+              value={state}
+              country={country}
+              countryValueType="short"
+              onChange={(e) => setState(e)}
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <TextField
+              type="email"
+              id="email"
+              label="Email"
+              name="email"
+              margin="normal"
+              required
+              fullWidth
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              type="text"
+              id="phone"
+              label="Phone"
+              name="phone"
+              margin="normal"
+              required
+              fullWidth
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </Grid>
+        </Grid>
 
-// export default AddNewStore;
+        <Grid container style={{ alignItems: "center", margin: "10px 0" }}>
+          <Grid item xs>
+            <Avatar
+              sx={{
+                m: 1,
+                bgcolor: "primary.main",
+                height: "80px",
+                width: "80px",
+                fontSize: "5.35rem",
+              }}
+            >
+              {!previewLogo ? (
+                <InsertPhotoRoundedIcon
+                  sx={{ height: "60px", width: "60px" }}
+                />
+              ) : (
+                <img
+                  src={previewLogo}
+                  style={{ height: "80px", width: "80px", borderRadius: "50%" }}
+                  alt=""
+                />
+              )}
+            </Avatar>
+          </Grid>
+          <Grid>
+            <Button
+              fullWidth
+              variant="contained"
+              component="label"
+              startIcon={<PhotoIcon />}
+            >
+              <input type="file" hidden name="logo" onChange={imageHandler} />
+              Change Profile Picture
+            </Button>
+          </Grid>
+        </Grid>
+
+        <Button
+          type="submit"
+          fullWidth
+          disabled={loading ? true : false}
+          variant="contained"
+          startIcon={<AddBoxOutlinedIcon />}
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Add Store
+        </Button>
+      </Box>
+    </Box>
+  );
+};
+
+export default AddNewStore;
