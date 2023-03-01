@@ -410,13 +410,13 @@ const AddNewProduct = () => {
         </Grid>
 
         <Box>
-          <label htmlFor="productImages">
+          <label htmlFor="productImage">
             <Input
               accept="imaage/*"
-              id="productImages"
+              id="productImage"
               multiple
               type="file"
-              name="productImages"
+              name="productImage"
               onChange={imageHandler}
             />
             <Button

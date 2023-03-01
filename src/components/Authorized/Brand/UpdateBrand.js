@@ -22,7 +22,7 @@ const UpdateBrand = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const { loading, brand } = useSelector(selectBrandDetails);
-  const { loading: isUdating, success } = useSelector(
+  const { loading: isUpdating, success } = useSelector(
     selectBrandMutationResult
   );
 
@@ -93,7 +93,7 @@ const UpdateBrand = () => {
             <Button
               type="submit"
               fullWidth
-              disabled={isUdating ? true : false}
+              disabled={isUpdating ? true : false}
               variant="contained"
               startIcon={<UpdateIcon />}
               sx={{ mt: 3, mb: 2, background: "#88acbc" }}

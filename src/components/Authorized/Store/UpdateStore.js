@@ -42,7 +42,7 @@ const UpdateStore = () => {
   const [logo, setLogo] = useState("");
   const [file, setFile] = useState("");
   const { loading, store } = useSelector(selectStoreDetails);
-  const { loading: isUdating, success } = useSelector(
+  const { loading: isUpdating, success } = useSelector(
     selectStoreMutationResult
   );
   const imageHandler = (e) => {
@@ -287,7 +287,7 @@ const UpdateStore = () => {
             <Button
               type="submit"
               fullWidth
-              disabled={isUdating ? true : false}
+              disabled={isUpdating ? true : false}
               variant="contained"
               startIcon={<UpdateIcon />}
               sx={{ mt: 3, mb: 2, background: "#88acbc" }}
