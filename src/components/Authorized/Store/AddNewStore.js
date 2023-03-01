@@ -22,7 +22,7 @@ import {
   selectStoreMutationResult,
 } from "../../../redux/features/storeSlice";
 import { useNavigate } from "react-router";
-import { IMAGE_BASEURL } from "../../constants/baseUrl";
+import { IMAGE_BASEURL } from "../../../constants/baseUrl";
 const AddNewStore = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();

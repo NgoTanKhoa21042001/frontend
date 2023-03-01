@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Box, Typography, Grid, Card } from "@mui/material";
 
 import { selectLoggedInUser } from "../../redux/features/authSlice";
-import { IMAGE_BASEURL } from "../constants/baseUrl";
+import { IMAGE_BASEURL } from "../../constants/baseUrl";
 import jwtDecode from "jwt-decode";
 
 const UserProfile = () => {

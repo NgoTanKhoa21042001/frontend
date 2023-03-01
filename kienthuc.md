@@ -54,3 +54,36 @@ Trong khi đó, formData là một đối tượng JavaScript được sử dụ
 # axiosPRivate vs axiosPublic
 
 Vì vậy, khác nhau giữa axiosPrivate và axiosPublic là trong cách chúng được cấu hình và sử dụng. axiosPrivate được sử dụng để gửi các yêu cầu tới các API yêu cầu xác thực và quyền truy cập, trong khi axiosPublic được sử dụng để gửi các yêu cầu đến các API không yêu cầu xác thực hoặc quyền truy cập.
+
+# Chức năng trong project
+
+1. Trang chủ: Trang đầu tiên khi khách hàng truy cập vào trang web của bạn. Trang chủ thường bao gồm thông tin về các sản phẩm, dịch vụ, hoặc chương trình khuyến mãi mới nhất của bạn.
+
+2. Danh mục sản phẩm: Các sản phẩm được phân loại vào các danh mục để khách hàng dễ dàng tìm kiếm và chọn lựa. Các danh mục sản phẩm có thể được sắp xếp theo tên, giá cả, thương hiệu, và nhiều tiêu chí khác.
+
+3. Trang chi tiết sản phẩm: Mỗi sản phẩm sẽ có một trang chi tiết riêng với thông tin về sản phẩm đó, bao gồm mô tả chi tiết, hình ảnh, giá cả, đánh giá của khách hàng, và các tính năng khác.
+
+4. Giỏ hàng: Khách hàng có thể thêm sản phẩm vào giỏ hàng và xem lại những sản phẩm đó trước khi thanh toán. Trong giỏ hàng, khách hàng có thể thay đổi số lượng sản phẩm, xóa sản phẩm, hay thay đổi thông tin về địa chỉ nhận hàng và phương thức thanh toán.
+
+5. Đăng ký tài khoản, đăng nhập tài khoản: Khách hàng có thể đăng ký một tài khoản trên trang web, hoặc đăng nhập để đơn giản hóa quá trình thanh toán và lưu trữ thông tin về các đơn hàng trước đây.
+
+6. User có thể change password, edit profile
+
+7. Thanh toán: Sau khi xác nhận thông tin đơn hàng, khách hàng sẽ được chuyển đến trang thanh toán để nhập thông tin về thẻ thanh toán, địa chỉ nhận hàng và các thông tin khác.
+
+8. Đơn hàng: Sau khi khách hàng hoàn tất quá trình thanh toán, họ sẽ nhận được thông báo về đơn hàng của mình, bao gồm thông tin về sản phẩm, giá cả, địa chỉ nhận hàng, thời gian giao hàng, và các thông tin khác.
+
+9. khả năng tương thích trên mọi thiết bị
+10. Phân chia role admin, seller, và user: admin có thể quản lí user, quản lí sản phẩm , quản lí đơn hàng
+11. users có thể đánh giá sản phẩm
+12. Tích hợp dịch vụ vận chuyển: Đây là phần tích hợp dịch vụ vận chuyển để cung cấp cho khách hàng các tùy chọn vận chuyển và tính phí vận chuyển phù hợp với địa chỉ giao hàng của họ.
+
+13. Persist login
+
+# ReactJS
+
+Nó có các công cụ tốt nhất để phát triển mã nhanh hơn. Mặc dù React chỉ là một thư viện, nhưng nó cho phép bạn tự do xây dựng ứng dụng và tổ chức mã theo cách bạn muốn, với các công cụ cần thiết. Do đó, nó tốt hơn Angular.js về hiệu suất và kết xuất giao diện người dùng.
+
+# Stock
+
+Trong sản phẩm, "stock" được dùng để chỉ số lượng sản phẩm có sẵn trong kho của công ty hoặc cửa hàng

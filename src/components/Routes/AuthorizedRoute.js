@@ -18,7 +18,13 @@ const AuthorizedRoute = () => {
     return (
       <>
         <Box
-          sx={{ background: "#88acbc", display: "flex", color: "#fff", p: 1 }}
+          sx={{
+            background: "#88acbc",
+            display: "flex",
+            color: "#fff",
+            p: 1,
+            alignItems: "center",
+          }}
         >
           <Box className="mTreeMenu" sx={{ minWidth: "225px", mr: 1 }}>
             <DrawerTreeMenu />

@@ -22,6 +22,7 @@ import AddNewStore from "./components/Authorized/Store/AddNewStore";
 import StoreList from "./components/Authorized/Store/StoreList";
 import UpdateStore from "./components/Authorized/Store/UpdateStore";
 import ProductList from "./components/Authorized/Product/ProductList";
+import AddNewProduct from "./components/Authorized/Product/AddNewProduct";
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function App() {
               <Route path="storelist" element={<StoreList />} />
               <Route path="store/:id" element={<UpdateStore />} />
 
+              <Route path="product" element={<AddNewProduct />} />
               <Route path="productlist" element={<ProductList />} />
             </Route>
           </Route>

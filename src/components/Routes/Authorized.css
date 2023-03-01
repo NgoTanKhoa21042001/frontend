@@ -5,6 +5,7 @@
 @media only screen and (max-width: 760px) {
   .mTreeMenu {
     display: flex;
+    min-width: none;
   }
   .dTreeMenu {
     display: none;

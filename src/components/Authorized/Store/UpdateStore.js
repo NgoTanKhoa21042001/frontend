@@ -23,7 +23,7 @@ import {
   selectStoreMutationResult,
   updateStore,
 } from "../../../redux/features/storeSlice";
-import { IMAGE_BASEURL } from "../../constants/baseUrl";
+import { IMAGE_BASEURL } from "../../../constants/baseUrl";
 
 const UpdateStore = () => {
   const navigate = useNavigate();

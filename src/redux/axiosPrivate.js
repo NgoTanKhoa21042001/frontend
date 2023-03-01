@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASEURL } from "../components/constants/baseUrl";
+import { BASEURL } from "../constants/baseUrl";
 let store;
 
 export const injectStore = (_store) => {

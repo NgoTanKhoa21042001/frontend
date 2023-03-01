@@ -1,5 +1,5 @@
 import { Tooltip } from "@mui/material";
-import logo from "../../images/OSHOP.svg";
+import logo from "../../images/OSHOP2.svg";
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";

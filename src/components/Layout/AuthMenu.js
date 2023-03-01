@@ -20,7 +20,7 @@ import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import Tooltip from "@mui/material/Tooltip";
 import PersonAdd from "@mui/icons-material/PersonAdd";
 import { logout, selectLoggedInUser } from "../../redux/features/authSlice";
-import { IMAGE_BASEURL } from "../constants/baseUrl";
+import { IMAGE_BASEURL } from "../../constants/baseUrl";
 
 // dấu chấm xanh hoạt động của avatar
 const StyledBadge = styled(Badge)(({ theme }) => ({

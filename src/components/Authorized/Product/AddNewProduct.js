@@ -1,274 +1,470 @@
-// import React, { useState, useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { toast } from "react-toastify";
-// import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+// import "./Product.css";
 
-// import {
-//   Box,
-//   Typography,
-//   TextField,
-//   Button,
-//   TextareaAutosize,
-//   Grid,
-//   Avatar,
-// } from "@mui/material";
-// import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
-// import InsertPhotoRoundedIcon from "@mui/icons-material/InsertPhotoRounded";
-// import PhotoIcon from "@mui/icons-material/Photo";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  TextareaAutosize,
+  Grid,
+  MenuItem,
+  FormControl,
+  Select,
+  InputLabel,
+  Input,
+} from "@mui/material";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import AddBoxOutlinedIcon from "@mui/icons-material/AddBoxOutlined";
+import { styled } from "@mui/material/styles";
+import CollectionsIcon from "@mui/icons-material/Collections";
 
-// import {
-//   addStore,
-//   resetMutationResult,
-//   selectStoreMutationResult,
-// } from "../../../redux/features/storeSlice";
-// import { useNavigate } from "react-router";
-// import { IMAGE_BASEURL } from "../../constants/baseUrl";
-// const AddNewStore = () => {
-//   const navigate = useNavigate();
-//   const dispatch = useDispatch();
-//   const { loading, success } = useSelector(selectStoreMutationResult);
-//   const [title, setTitle] = useState("");
-//   const [description, setDescription] = useState("");
-//   const [address, setAddress] = useState("");
-//   const [city, setCity] = useState("");
-//   const [zipCode, setZipCode] = useState("");
-//   const [state, setState] = useState("");
-//   const [country, setCountry] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [phone, setPhone] = useState("");
-//   const [previewLogo, setPreviewLogo] = useState("");
-//   const [logo, setLogo] = useState("");
+import {
+  getCategories,
+  selectAllCategories,
+} from "../../../redux/features/categorySlice";
+import { getBrands, selectAllBrands } from "../../../redux/features/brandSlice";
+import { getStores, selectAllStores } from "../../../redux/features/storeSlice";
+import {
+  addProduct,
+  resetMutationResult,
+  selectProductMutationResult,
+} from "../../../redux/features/productSlice";
+import { useNavigate } from "react-router";
+import { IMAGE_BASEURL } from "../../../constants/baseUrl";
+import { POLICIES } from "../../../constants/policies";
+import gallery from "../../../images/gallery.png";
+import galleryback from "../../../images/galleryback.png";
+import "./Product.css";
+const AddNewProduct = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { loading, success } = useSelector(selectProductMutationResult);
 
-//   const imageHandler = (e) => {
-//     if (e.target.name === "logo") {
-//       setLogo(e.target.files);
-//       const reader = new FileReader();
-//       reader.onload = () => {
-//         if (reader.readyState === 2) {
-//           // gán url
-//           setPreviewLogo(reader.result);
-//         }
-//       };
-//       // đọc url hiển thị ra hình ảnh
-//       reader.readAsDataURL(e.target.files[0]);
-//     }
-//   };
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     const formData = new FormData();
-//     formData.append("title", title);
-//     formData.append("description", description);
-//     formData.append("address", address);
-//     formData.append("city", city);
-//     formData.append("zipCode", zipCode);
-//     formData.append("state", state);
-//     formData.append("country", country);
-//     formData.append("email", email);
-//     formData.append("phone", phone);
-//     // Cuối cùng, hàm gọi một hàm được gọi là addStore thông qua phương thức dispatch để gửi dữ liệu trong formData lên server. Hàm addStore được truyền vào một đối tượng với hai thuộc tính là formData và toast. formData chứa dữ liệu của biểu mẫu, trong trường hợp này là file hình ảnh. toast được sử dụng để hiển thị thông báo thành công hoặc thất bại khi gửi dữ liệu.
-//     Object.keys(logo).forEach((key) => {
-//       formData.append(logo.item(key).name, logo.item(key));
-//       console.log(logo.item(key).name);
-//       console.log(logo.item(key));
-//     });
-//     dispatch(addStore({ formData, toast }));
-//   };
-//   useEffect(() => {
-//     if (success) {
-//       dispatch(resetMutationResult());
-//       setTitle("");
-//       setDescription("");
-//       setAddress("");
-//       setCity("");
-//       setZipCode("");
-//       setCountry("");
-//       setState("");
-//       setEmail("");
-//       setPhone("");
-//       setPreviewLogo("");
-//       setLogo("");
-//     }
-//   }, [success, dispatch]);
-//   return (
-//     <Box
-//       sx={{
-//         display: "flex",
-//         flexDirection: "column",
-//         alignItems: "center",
-//         marginTop: 2,
-//       }}
-//     >
-//       {" "}
-//       <Typography component="div" variant="h5">
-//         Add new store
-//       </Typography>
-//       <Box component="form" onSubmit={handleSubmit}>
-//         <TextField
-//           type="text"
-//           id="title"
-//           label="Title"
-//           name="title"
-//           margin="normal"
-//           required
-//           fullWidth
-//           autoFocus
-//           value={title}
-//           onChange={(e) => setTitle(e.target.value)}
-//         />
+  const { brands } = useSelector(selectAllBrands);
+  const { categories } = useSelector(selectAllCategories);
+  const { stores } = useSelector(selectAllStores);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [discount, setDiscount] = useState(0);
+  const [weight, setWeight] = useState(0);
+  const [stock, setStock] = useState(1);
+  const [category, setCategory] = useState("");
+  const [brand, setBrand] = useState("");
+  const [store, setStore] = useState("");
+  const [localShipmentPolicy, setLocalShipmentPolicy] = useState("standard");
+  const [internationalShipmentPolicy, setInternationalShipmentPolicy] =
+    useState("standard");
+  const [customLocalShipmentCost, setCustomLocalShipmentCost] = useState("");
+  const [customInternationalShipmentCost, setCustomInternationalShipmentCost] =
+    useState("");
 
-//         <TextField
-//           type="text"
-//           id="description"
-//           label="Description"
-//           name="description"
-//           margin="normal"
-//           required
-//           fullWidth
-//           autoFocus
-//           value={description}
-//           onChange={(e) => setDescription(e.target.value)}
-//         />
-//         <TextareaAutosize
-//           required
-//           aria-label="address"
-//           minRows={5}
-//           placeholder="Address"
-//           value={address}
-//           style={{ width: "100%", marginTop: "16px" }}
-//           onChange={(e) => setAddress(e.target.value)}
-//         />
-//         <Grid container spacing={2}>
-//           <Grid item sx={6}>
-//             <TextField
-//               type="text"
-//               id="city"
-//               label="City"
-//               name="city"
-//               margin="normal"
-//               required
-//               fullWidth
-//               value={city}
-//               onChange={(e) => setCity(e.target.value)}
-//             />
-//           </Grid>
-//           <Grid item sx={6}>
-//             <TextField
-//               type="text"
-//               id="zipCode"
-//               label="Zip"
-//               name="zipCode"
-//               margin="normal"
-//               required
-//               fullWidth
-//               value={zipCode}
-//               onChange={(e) => setZipCode(e.target.value)}
-//             />
-//           </Grid>
-//         </Grid>
-//         <Grid container spacing={2}>
-//           <Grid item xs={6}>
-//             <CountryDropdown
-//               classes="ship-drop-down"
-//               defaultOptionLabel="Select a Country"
-//               style={{ width: "100%" }}
-//               value={country}
-//               valueType="short"
-//               priorityOptions={["CA", "US", "IN", "GB"]}
-//               onChange={(e) => setCountry(e)}
-//             />
-//           </Grid>
-//           <Grid item xs={6}>
-//             <RegionDropdown
-//               classes="ship-drop-down"
-//               defaultOptionLabel="Now select a region"
-//               blankOptionLabel="No country selected"
-//               style={{ width: "100%" }}
-//               value={state}
-//               country={country}
-//               countryValueType="short"
-//               onChange={(e) => setState(e)}
-//             />
-//           </Grid>
-//         </Grid>
-//         <Grid container spacing={2}>
-//           <Grid item xs={6}>
-//             <TextField
-//               type="email"
-//               id="email"
-//               label="Email"
-//               name="email"
-//               margin="normal"
-//               required
-//               fullWidth
-//               value={email}
-//               onChange={(e) => setEmail(e.target.value)}
-//             />
-//           </Grid>
-//           <Grid item xs={6}>
-//             <TextField
-//               type="text"
-//               id="phone"
-//               label="Phone"
-//               name="phone"
-//               margin="normal"
-//               required
-//               fullWidth
-//               value={phone}
-//               onChange={(e) => setPhone(e.target.value)}
-//             />
-//           </Grid>
-//         </Grid>
+  const [images, setImages] = useState([]);
+  const [productFiles, setProductFiles] = useState([]);
 
-//         <Grid container style={{ alignItems: "center", margin: "10px 0" }}>
-//           <Grid item xs>
-//             <Avatar
-//               sx={{
-//                 m: 1,
-//                 bgcolor: "primary.main",
-//                 height: "80px",
-//                 width: "80px",
-//                 fontSize: "5.35rem",
-//               }}
-//             >
-//               {!previewLogo ? (
-//                 <InsertPhotoRoundedIcon
-//                   sx={{ height: "60px", width: "60px" }}
-//                 />
-//               ) : (
-//                 <img
-//                   src={previewLogo}
-//                   style={{ height: "80px", width: "80px", borderRadius: "50%" }}
-//                   alt=""
-//                 />
-//               )}
-//             </Avatar>
-//           </Grid>
-//           <Grid>
-//             <Button
-//               fullWidth
-//               variant="contained"
-//               component="label"
-//               startIcon={<PhotoIcon />}
-//             >
-//               <input type="file" hidden name="logo" onChange={imageHandler} />
-//               Change Profile Picture
-//             </Button>
-//           </Grid>
-//         </Grid>
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-//         <Button
-//           type="submit"
-//           fullWidth
-//           disabled={loading ? true : false}
-//           variant="contained"
-//           startIcon={<AddBoxOutlinedIcon />}
-//           sx={{ mt: 3, mb: 2 }}
-//         >
-//           Add Store
-//         </Button>
-//       </Box>
-//     </Box>
-//   );
-// };
+    if (images.length < 1) {
+      toast.error("Please select images.");
+      return;
+    }
+    if (localShipmentPolicy === "custom" && customLocalShipmentCost < 1) {
+      toast.error("Please enter custom shipping cost");
+      return;
+    }
 
-// export default AddNewStore;
+    if (
+      internationalShipmentPolicy === "custom" &&
+      setCustomInternationalShipmentCost < 1
+    ) {
+      toast.error("Please enter custom shipping cost");
+      return;
+    }
+    const formData = new FormData();
+
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("price", price);
+    formData.append("discount", discount);
+    formData.append("weight", weight);
+    formData.append("stock", stock);
+    formData.append("category", category);
+    formData.append("brand", brand);
+    formData.append("store", store);
+
+    formData.append("localShipmentPolicy", localShipmentPolicy);
+    formData.append("internationalShipmentPolicy", internationalShipmentPolicy);
+    formData.append("customLocalShipmentCost", customLocalShipmentCost);
+    formData.append(
+      "setCustomInternationalShipmentCost",
+      setCustomInternationalShipmentCost
+    );
+
+    Object.keys(productFiles).forEach((key) => {
+      formData.append(productFiles.item(key).name, productFiles.item(key));
+    });
+    dispatch(addProduct({ formData, toast }));
+  };
+
+  const Input = styled("input")({
+    display: "none",
+  });
+
+  // Tooltip
+  const InfoTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} arrow classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.arrow}`]: {
+      color: theme.palette.common.black,
+    },
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: theme.palette.common.black,
+      padding: "10px 5px",
+      maxWidth: 220,
+    },
+  }));
+
+  // image
+  const imageHandler = (e) => {
+    const files = Array.from(e.target.files);
+    setProductFiles(e.target.files);
+    setImages([]);
+
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImages((old) => [...old, reader.result]);
+        }
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+  useEffect(() => {
+    dispatch(getBrands({ toast }));
+    dispatch(getCategories({ toast }));
+    dispatch(getStores({ toast }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    // về mặc định
+    if (success) {
+      dispatch(resetMutationResult());
+      setTitle("");
+      setDescription("");
+      setPrice("");
+      setDiscount(0);
+      setWeight(0);
+      setStock(1);
+      setCategory("");
+      setBrand("");
+      setStore("");
+      setLocalShipmentPolicy("standard");
+      setInternationalShipmentPolicy("standard");
+      setCustomLocalShipmentCost("");
+      setCustomInternationalShipmentCost("");
+      setImages([]);
+      setProductFiles("");
+    }
+  }, [success, dispatch]);
+  return (
+    <Box sx={{ m: "0 auto", marginTop: 2, maxWidth: "550px" }}>
+      {" "}
+      <Typography component="div" variant="h5" sx={{ textAlign: "center" }}>
+        Add new product
+      </Typography>
+      <Box component="form" onSubmit={handleSubmit}>
+        <TextField
+          type="text"
+          id="title"
+          label="Title"
+          name="title"
+          margin="normal"
+          required
+          fullWidth
+          autoFocus
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <TextareaAutosize
+          required
+          aria-label="description"
+          minRows={5}
+          placeholder="Description"
+          value={description}
+          style={{ width: "100%", marginTop: "16px" }}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <Grid container spacing={2}>
+          <Grid item sx={6}>
+            <TextField
+              type="number"
+              id="price"
+              label="Price"
+              name="price"
+              margin="normal"
+              required
+              fullWidth
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+            />
+          </Grid>
+          <Grid item sx={6}>
+            <TextField
+              type="number"
+              id="discount"
+              label="Discount"
+              name="disocunt"
+              margin="normal"
+              required
+              fullWidth
+              value={discount}
+              onChange={(e) => setDiscount(e.target.value)}
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2}>
+          <Grid item sx={6}>
+            <InfoTooltip
+              placement="right"
+              arrow
+              title="Weight in kg. Put weight if items weight exceed 5kg"
+            >
+              <TextField
+                type="number"
+                id="weight"
+                label="Weight"
+                name="weight"
+                margin="normal"
+                fullWidth
+                value={weight}
+                onChange={(e) => setWeight(e.target.value)}
+              />
+            </InfoTooltip>
+          </Grid>
+          <Grid item sx={6}>
+            <TextField
+              type="number"
+              id="stock"
+              label="Stock"
+              name="stock"
+              margin="normal"
+              required
+              fullWidth
+              value={stock}
+              onChange={(e) => setStock(e.target.value)}
+            />
+          </Grid>
+        </Grid>
+        <Grid container spacing={2}>
+          <Grid item xs={6}>
+            <FormControl fullWidth>
+              <InputLabel id="category">Category</InputLabel>
+              <Select
+                required
+                labelId="category"
+                id="category"
+                value={category}
+                label="Category"
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                {categories &&
+                  categories.map((cat, index) => (
+                    <MenuItem key={cat._id} value={cat._id}>
+                      {cat.title}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={6}>
+            <FormControl fullWidth>
+              <InputLabel id="brand">Brand</InputLabel>
+              <Select
+                required
+                labelId="brand"
+                id="brand"
+                value={brand}
+                label="Brand"
+                onChange={(e) => setBrand(e.target.value)}
+              >
+                {brands &&
+                  brands.map((brand, index) => (
+                    <MenuItem key={brand._id} value={brand._id}>
+                      {brand.title}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{ mt: "16px" }}>
+          <Grid item xs={6}>
+            <FormControl fullWidth>
+              <InputLabel id="store">Store</InputLabel>
+              <Select
+                required
+                labelId="store"
+                id="store"
+                value={store}
+                label="Store"
+                onChange={(e) => setStore(e.target.value)}
+              >
+                {stores &&
+                  stores.map((store, index) => (
+                    <MenuItem key={store._id} value={store._id}>
+                      {store.title}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={6}></Grid>
+        </Grid>
+        <Grid container spacing={2} sx={{ mt: "16px" }}>
+          <Grid item xs={6}>
+            <FormControl fullWidth>
+              <InputLabel id="localShipmentPolicy">
+                Local Shipment Policy
+              </InputLabel>
+              <Select
+                required
+                labelId="localShipmentPolicy"
+                id="localShipmentPolicy"
+                value={localShipmentPolicy}
+                label="Local Shipment Policy"
+                onChange={(e) => setLocalShipmentPolicy(e.target.value)}
+              >
+                {POLICIES &&
+                  POLICIES.map((policy) => (
+                    <MenuItem key={policy.id} value={policy.type}>
+                      {policy.title}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={6}>
+            <FormControl fullWidth>
+              <InputLabel id="internationalShipmentPolicy">
+                International Shipment Policy
+              </InputLabel>
+              <Select
+                required
+                labelId="internationalShipmentPolicy"
+                id="internationalShipmentPolicy"
+                value={internationalShipmentPolicy}
+                label="International Shipment Policy"
+                onChange={(e) => setInternationalShipmentPolicy(e.target.value)}
+              >
+                {POLICIES &&
+                  POLICIES.map((policy) => (
+                    <MenuItem key={policy.id} value={policy.type}>
+                      {policy.title}
+                    </MenuItem>
+                  ))}
+              </Select>
+            </FormControl>
+          </Grid>
+        </Grid>
+
+        <Grid container spacing={2}>
+          <Grid item sx={6}>
+            {localShipmentPolicy !== "custom" ? (
+              ""
+            ) : (
+              <TextField
+                type="number"
+                id="customLocalShipmentCost"
+                label="Local Shipment Cost"
+                name="customLocalShipmentCost"
+                margin="normal"
+                fullWidth
+                value={customLocalShipmentCost}
+                onChange={(e) => setCustomLocalShipmentCost(e.target.value)}
+              />
+            )}
+          </Grid>
+          <Grid item sx={6}>
+            {internationalShipmentPolicy !== "custom" ? (
+              ""
+            ) : (
+              <TextField
+                type="number"
+                id="customInternationalShipmentCost"
+                label="International Shipment Cost"
+                name="customInternationalShipmentCost"
+                margin="normal"
+                fullWidth
+                value={customInternationalShipmentCost}
+                onChange={(e) =>
+                  setCustomInternationalShipmentCost(e.target.value)
+                }
+              />
+            )}
+          </Grid>
+        </Grid>
+
+        <Box>
+          <label htmlFor="productImages">
+            <Input
+              accept="imaage/*"
+              id="productImages"
+              multiple
+              type="file"
+              name="productImages"
+              onChange={imageHandler}
+            />
+            <Button
+              type="button"
+              fullWidth
+              component="span"
+              variant="outlined"
+              startIcon={<CollectionsIcon />}
+              sx={{ m: "16px 0" }}
+            >
+              Upload photo
+            </Button>
+          </label>
+        </Box>
+
+        {images.length > 0 ? (
+          <Box className="">
+            {images.map((image, index) => (
+              // eslint-disable-next-line jsx-a11y/img-redundant-alt
+              <img
+                key={index}
+                src={image}
+                alt="product image"
+                style={{ maxWidth: 90, maxHeight: 80, padding: "0 5px" }}
+              />
+            ))}
+          </Box>
+        ) : (
+          <Box
+            className="galleryback"
+            style={{ backgroundImage: `url("${galleryback}")` }}
+          >
+            <img src={gallery} alt="oshop nophoto" style={{ height: "78px" }} />
+          </Box>
+        )}
+        <Button
+          type="submit"
+          fullWidth
+          disabled={loading ? true : false}
+          variant="contained"
+          startIcon={<AddBoxOutlinedIcon />}
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Add Product
+        </Button>
+      </Box>
+    </Box>
+  );
+};
+
+export default AddNewProduct;

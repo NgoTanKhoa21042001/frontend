@@ -11,7 +11,7 @@ import PhotoIcon from "@mui/icons-material/Photo";
 
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { IMAGE_BASEURL } from "../constants/baseUrl";
+import { IMAGE_BASEURL } from "../../constants/baseUrl";
 import { toast } from "react-toastify";
 import {
   resetMutationResult,
