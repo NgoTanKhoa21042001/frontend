@@ -2,11 +2,11 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosPublic } from "../axiosPublic";
 import axiosPrivate from "../axiosPrivate";
 
-export const getProductsByAuthorizeRoles = createAsyncThunk(
-  "product/getProductsByAuthorizeRoles",
+export const getProducts = createAsyncThunk(
+  "product/getProducts",
   async ({ toast }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosPrivate.get(`/athorized/products`);
+      const { data } = await axiosPrivate.get(`/products`);
       return data;
     } catch (error) {
       toast.error(error.response.data.message);
@@ -14,6 +14,7 @@ export const getProductsByAuthorizeRoles = createAsyncThunk(
     }
   }
 );
+
 export const addProduct = createAsyncThunk(
   "product/addProduct",
   async ({ formData, toast }, { rejectWithValue }) => {
@@ -22,6 +23,18 @@ export const addProduct = createAsyncThunk(
         headers: { "Content-type": "multipart/form-data" },
       });
       toast.success("Successfully added new product.");
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+export const getProductsByAuthorizeRoles = createAsyncThunk(
+  "product/getProductsByAuthorizeRoles",
+  async ({ toast }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPrivate.get(`/athorized/products`);
       return data;
     } catch (error) {
       toast.error(error.response.data.message);
@@ -85,6 +98,23 @@ const productSlice = createSlice({
   },
   extraReducers: {
     // get all product list fro all
+    [getProducts.pending]: (state, action) => {
+      state.productlist.loading = true;
+    },
+    [getProducts.fulfilled]: (state, action) => {
+      state.productlist.loading = false;
+      state.productlist.products = action.payload.products;
+      state.productlist.productCount = action.payload.productCount;
+      state.productlist.resultPerPage = action.payload.resultPerPage;
+      state.productlist.filteredProductsCount =
+        action.payload.filteredProductsCount;
+    },
+    [getProducts.rejected]: (state, action) => {
+      state.productlist.loading = false;
+      state.productlist.error = action.payload;
+    },
+
+    // authorized
     [getProductsByAuthorizeRoles.pending]: (state, action) => {
       state.productlist.loading = true;
     },

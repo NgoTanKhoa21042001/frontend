@@ -1,0 +1,23 @@
+.wrapper {
+  display: flex;
+}
+.container {
+  width: 100%;
+  text-align: center;
+}
+.filter-box {
+  padding: 0 5px;
+  min-width: 290px;
+}
+
+.productCard {
+  margin-bottom: 100px;
+}
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-column-gap: 20px;
+  width: 98%;
+  margin: 0 auto;
+  justify-content: center;
+}

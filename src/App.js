@@ -24,6 +24,7 @@ import UpdateStore from "./components/Authorized/Store/UpdateStore";
 import ProductList from "./components/Authorized/Product/ProductList";
 import AddNewProduct from "./components/Authorized/Product/AddNewProduct";
 import UpdateProduct from "./components/Authorized/Product/UpdateProduct";
+import Products from "./components/Product/Products";
 
 function App() {
   return (
@@ -44,7 +45,9 @@ function App() {
       {/* Same as */}
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          <Route index element={<Aboutus />} />
+          {/* <Route index element={<Home />} />   */}
+          <Route path="product" element={<Products />} />
+          <Route path="about-us" element={<Aboutus />} />
           <Route path="contact-us" element={<Contactus />} />
           <Route path="auth" element={<Auth />} />
           <Route path="/" element={<AuthenticatedRoute />}>
