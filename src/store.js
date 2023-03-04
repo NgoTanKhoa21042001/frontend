@@ -4,6 +4,7 @@ import BrandReducer from "./redux/features/brandSlice";
 import CategoryReducer from "./redux/features/categorySlice";
 import StoreReducer from "./redux/features/storeSlice";
 import ProductReducer from "./redux/features/productSlice";
+import CartReducer from "./redux/features/cartSlice";
 export default configureStore({
   reducer: {
     auth: AuthReducer,
@@ -11,5 +12,6 @@ export default configureStore({
     category: CategoryReducer,
     store: StoreReducer,
     product: ProductReducer,
+    cart: CartReducer,
   },
 });

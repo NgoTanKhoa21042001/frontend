@@ -31,7 +31,7 @@ const Product = () => {
   }, [dispatch]);
   return (
     <Box className="wrapper">
-      <Box className="filter-box"></Box>
+      <Box className="filter-box">cdc</Box>
       <Box className="container">
         <Box className="card-container">
           {products &&

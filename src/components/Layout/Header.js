@@ -12,6 +12,8 @@ import ContactPageIcon from "@mui/icons-material/ContactPage";
 import "./Header.css";
 import DrawerMenu from "./DrawerMenu";
 import AuthMenu from "./AuthMenu";
+import { useSelector } from "react-redux";
+import { selectCartItems } from "../../redux/features/cartSlice";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -23,6 +25,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 const Header = () => {
+  const { products } = useSelector(selectCartItems);
   return (
     <header>
       <div className="site-header">
@@ -72,7 +75,10 @@ const Header = () => {
           <div className="cart-area">
             <Tooltip title="Your cart">
               <Link to="/cart" style={{ padding: "8px 15px" }}>
-                <StyledBadge badgeContent={3} color="secondary">
+                <StyledBadge
+                  badgeContent={products.length > 0 ? products.length : "0"}
+                  color="secondary"
+                >
                   <ShoppingCartIcon />
                 </StyledBadge>
               </Link>
