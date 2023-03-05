@@ -139,17 +139,17 @@ const productSlice = createSlice({
       state.mutationResult.error = action.payload;
     },
     //get all product list
-    // [getProductsByAuthorizeRoles.pending]: (state, action) => {
-    //   state.productlist.loading = true;
-    // },
-    // [getProductsByAuthorizeRoles.fulfilled]: (state, action) => {
-    //   state.productlist.loading = false;
-    //   state.productlist.products = action.payload.products;
-    // },
-    // [getProductsByAuthorizeRoles.rejected]: (state, action) => {
-    //   state.productlist.loading = false;
-    //   state.productlist.error = action.payload;
-    // },
+    [getProductsByAuthorizeRoles.pending]: (state, action) => {
+      state.productlist.loading = true;
+    },
+    [getProductsByAuthorizeRoles.fulfilled]: (state, action) => {
+      state.productlist.loading = false;
+      state.productlist.products = action.payload.products;
+    },
+    [getProductsByAuthorizeRoles.rejected]: (state, action) => {
+      state.productlist.loading = false;
+      state.productlist.error = action.payload;
+    },
     //delete a product
     [deleteProduct.pending]: (state, action) => {
       state.mutationResult.loading = true;

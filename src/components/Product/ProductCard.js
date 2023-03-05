@@ -79,7 +79,7 @@ const ProductCard = ({ product }) => {
     getExist();
   });
   const linkToNavigate = () => {
-    navigate(`/products/${product._id}`);
+    navigate(`/product/${product._id}`);
   };
   return (
     <Box className="productCard">

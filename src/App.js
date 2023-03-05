@@ -25,6 +25,7 @@ import ProductList from "./components/Authorized/Product/ProductList";
 import AddNewProduct from "./components/Authorized/Product/AddNewProduct";
 import UpdateProduct from "./components/Authorized/Product/UpdateProduct";
 import Products from "./components/Product/Products";
+import ProductDetails from "./components/Product/ProductDetails";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           {/* <Route index element={<Home />} />   */}
           <Route path="product" element={<Products />} />
+          <Route path="product/:id" element={<ProductDetails />} />
           <Route path="about-us" element={<Aboutus />} />
           <Route path="contact-us" element={<Contactus />} />
           <Route path="auth" element={<Auth />} />

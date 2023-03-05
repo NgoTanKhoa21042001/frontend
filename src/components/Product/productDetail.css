@@ -1,0 +1,31 @@
+.product-details {
+  width: 100%;
+  display: flex;
+}
+.product-image-carousel {
+  width: 35%;
+  text-align: center;
+}
+.product-info {
+  flex: 1;
+  padding: 0 20px;
+}
+.product-reviews {
+  width: 100%;
+  margin: 0 auto;
+}
+.product-image-carousel img {
+  width: 100%;
+}
+
+.swiper-pagination-bullet {
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  color: #fff;
+  opacity: 0.3;
+}
+.swiper-pagination-bullet-active {
+  opacity: 1;
+}
