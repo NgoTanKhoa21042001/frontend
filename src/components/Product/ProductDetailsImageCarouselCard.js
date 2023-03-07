@@ -26,7 +26,7 @@ const ProductDetailsImageCarouselCard = ({ images }) => {
         pagination={pagination}
         mousewheel={true}
         keyboard={true}
-        autoplay={{ delay: 2500, disableOnInteraction: true }}
+        // autoplay={{ delay: 2500, disableOnInteraction: true }}
         loop={true}
         modules={[Navigation, Pagination, Mousewheel, Keyboard, Autoplay]}
         className="mySwiper"

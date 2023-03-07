@@ -29,3 +29,30 @@
 .swiper-pagination-bullet-active {
   opacity: 1;
 }
+
+.btn-cart {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.btn-cart,
+.btn-quantity {
+  display: inline-block;
+}
+.btn-quantity {
+  margin-right: 50px;
+}
+.btn-quantity label {
+  display: inline-block;
+  width: 30px;
+  text-align: center;
+}
+@media only screen and (max-width: 768px) {
+  .product-details {
+    width: 100%;
+    flex-direction: column;
+  }
+  .product-image-carousel {
+    width: 100%;
+    text-align: center;
+  }
+}
