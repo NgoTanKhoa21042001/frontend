@@ -25,6 +25,14 @@ import {
 import ProductDetailsImageCarouselCard from "./ProductDetailsImageCarouselCard";
 import ProductDetailsInfoCard from "./ProductDetailsInfoCard";
 import "./productDetail.css";
+import {
+  getReviews,
+  newReview,
+  resetMutationResult,
+  selectAllReviews,
+  selectReviewMutationResult,
+} from "../../redux/features/reviewSlice";
+import ReviewListCard from "./ReviewListCard";
 const ProductDetails = () => {
   const [open, setOpen] = React.useState(false);
   const [submitRating, setSubmitRating] = useState(5);
@@ -36,13 +44,31 @@ const ProductDetails = () => {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleSubmitReviewRating = () => {};
   const { id } = useParams();
   const dispatch = useDispatch();
   const { loading, product } = useSelector(selectProductDetails);
+  const { reviews } = useSelector(selectAllReviews);
+  const { success } = useSelector(selectReviewMutationResult);
+  console.log(reviews);
+
   useEffect(() => {
+    if (success) {
+      toast.success("Thank for your valuable review");
+      dispatch(resetMutationResult());
+    }
     dispatch(productDetails({ id, toast }));
-  }, [dispatch, id]);
+    dispatch(getReviews({ id, toast }));
+  }, [dispatch, id, success]);
+  const handleSubmitReviewRating = () => {
+    setOpen(false);
+
+    const jsonData = {
+      rating: submitRating,
+      comment: submitReview,
+      productId: product._id,
+    };
+    dispatch(newReview({ jsonData, toast }));
+  };
   return (
     <>
       {loading ? (
@@ -59,10 +85,10 @@ const ProductDetails = () => {
               {product && <ProductDetailsInfoCard product={product} />}
             </Box>
           </Box>
-          <Box className="product-reviews">
+          <Box className="product-reviews" style={{ marginTop: "50px" }}>
             <Box className="reviews" style={{ textAlign: "center" }}>
               <Button variant="outlined" onClick={handleClickOpen}>
-                Open form dialog
+                Submit Review
               </Button>
               <Dialog open={open} onClose={handleClose}>
                 <DialogTitle
@@ -78,8 +104,6 @@ const ProductDetails = () => {
                       onChange={(e, newValue) => setSubmitRating(newValue)}
                     />
                   </Stack>
-
-                  {/* LỜI BÌNH LUẬN */}
                   <TextareaAutosize
                     id="review"
                     style={{ width: "100%", margin: "10px 0", padding: 0 }}
@@ -94,6 +118,17 @@ const ProductDetails = () => {
                   <Button onClick={handleSubmitReviewRating}>Submit</Button>
                 </DialogActions>
               </Dialog>
+
+              {product?.reviews && product.reviews[0] ? (
+                <Box className="review">
+                  {product?.reviews &&
+                    product.reviews.map((review) => (
+                      <ReviewListCard review={review} />
+                    ))}
+                </Box>
+              ) : (
+                <Typography variant="button">No reviews yet</Typography>
+              )}
             </Box>
           </Box>
         </>

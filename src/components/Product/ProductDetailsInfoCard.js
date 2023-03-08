@@ -36,7 +36,6 @@ const ProductDetailsInfoCard = ({ product }) => {
     dispatch(addItemsToCart({ _id, quantity, toast }));
     toast.success("Item added to cart");
   };
-  console.log(product);
   return (
     <Box>
       <Typography variant="h6" component="div">
