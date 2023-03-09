@@ -64,6 +64,7 @@ const cartSlice = createSlice({
 
       const item = action.payload;
       if (
+        // kiểm tra xem
         Array.isArray(state.cartItems.products) &&
         state.cartItems.products.length < 1
       ) {

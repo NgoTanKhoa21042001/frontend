@@ -35,7 +35,7 @@ const ProductCard = ({ product }) => {
   const [icon, setIcon] = useState(<AddShoppingCart />);
   const [text, setText] = useState("Add to cart");
   const { products } = useSelector(selectCartItems);
-
+  // Đây là trang product
   const remove = () => {
     setExist(true);
     setColor("error");

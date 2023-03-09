@@ -26,6 +26,7 @@ import AddNewProduct from "./components/Authorized/Product/AddNewProduct";
 import UpdateProduct from "./components/Authorized/Product/UpdateProduct";
 import Products from "./components/Product/Products";
 import ProductDetails from "./components/Product/ProductDetails";
+import Cart from "./components/Cart/Cart";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
           <Route path="about-us" element={<Aboutus />} />
           <Route path="contact-us" element={<Contactus />} />
           <Route path="auth" element={<Auth />} />
+          <Route path="cart" element={<Cart />} />
           <Route path="/" element={<AuthenticatedRoute />}>
             <Route path="profile" element={<UserProfile />} />
             <Route path="me/update" element={<UpdateProfile />} />
