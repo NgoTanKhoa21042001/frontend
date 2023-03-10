@@ -27,6 +27,7 @@ import UpdateProduct from "./components/Authorized/Product/UpdateProduct";
 import Products from "./components/Product/Products";
 import ProductDetails from "./components/Product/ProductDetails";
 import Cart from "./components/Cart/Cart";
+import Shipping from "./components/Shipping/Shipping";
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
             <Route path="profile" element={<UserProfile />} />
             <Route path="me/update" element={<UpdateProfile />} />
             <Route path="password/update" element={<UpdatePassword />} />
+            <Route path="/shipping" element={<Shipping />} />
 
             <Route path="/authorized" element={<AuthorizedRoute />}>
               <Route path="dashboard" element={<Dashboard />} />

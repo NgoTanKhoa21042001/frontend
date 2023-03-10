@@ -87,3 +87,7 @@ Nó có các công cụ tốt nhất để phát triển mã nhanh hơn. Mặc d
 # Stock
 
 Trong sản phẩm, "stock" được dùng để chỉ số lượng sản phẩm có sẵn trong kho của công ty hoặc cửa hàng
+
+# useLocation
+
+useLocation là một hook được React Router Dom cung cấp trong thư viện react-router để giúp các thành phần React truy cập và sử dụng các thông tin về vị trí (location) của URL hiện tại được trình duyệt hiển thị. Hook này trả về một đối tượng chứa các thuộc tính như pathname, search, hash, state,... để các thành phần có thể sử dụng thông tin đó để điều hướng đến các trang khác hoặc hiển thị dữ liệu tương ứng.

@@ -16,9 +16,15 @@ import {
   Link,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { login } from "../../redux/features/authSlice";
+import { login, selectLoggedInUser } from "../../redux/features/authSlice";
 const Login = () => {
+  const location = useLocation();
+  let path = "/";
+  if (location.state) {
+    path = location.state.path;
+  }
   const dispatch = useDispatch();
+  const { accessToken } = useSelector(selectLoggedInUser);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -37,6 +43,13 @@ const Login = () => {
     dispatch(login({ jsonData, toast }));
     navigate("/");
   };
+  useEffect(() => {
+    // - if(accessToken) kiểm tra giá trị accessToken có tồn tại hay không. Nếu có, phương thức navigate với tham số path được gọi để chuyển hướng đến vị trí URL đã được định nghĩa trong biến path đưa vào.
+    // path sẽ ra trang home
+    if (accessToken) {
+      navigate(path);
+    }
+  }, [accessToken, path, navigate]);
   return (
     <>
       <Box
