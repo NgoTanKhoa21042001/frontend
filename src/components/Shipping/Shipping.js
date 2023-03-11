@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { CountryDropdown, RegionDropdown } from "react-country-region-selector";
 import { useNavigate } from "react-router-dom";
+
 import {
-  saveShippingInfo,
   selectShippingInfo,
+  saveShippingInfo,
 } from "../../redux/features/shippingSlice";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
+
 import {
   Box,
   Typography,
@@ -19,15 +21,17 @@ import {
 } from "@mui/material";
 
 const Shipping = () => {
-  const { shipInfo } = useSelector(selectShippingInfo);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { shipInfo } = useSelector(selectShippingInfo);
+
   const [address, setAddress] = useState(shipInfo.address || "");
   const [city, setCity] = useState(shipInfo.city || "");
   const [zipCode, setZipCode] = useState(shipInfo.zipCode || "");
   const [state, setState] = useState(shipInfo.state || "");
   const [country, setCountry] = useState(shipInfo.country || "");
   const [phone, setPhone] = useState(shipInfo.phone || "");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
@@ -39,7 +43,6 @@ const Shipping = () => {
     <Box
       sx={{ m: "0 auto", marginTop: 2, textAlign: "center", maxWidth: "550px" }}
     >
-      {" "}
       <LocationOnIcon sx={{ width: 100, height: 100, color: "#1976d2" }} />
       <Typography component="div" variant="h5">
         Shipping Information
@@ -93,6 +96,7 @@ const Shipping = () => {
             />
           </Grid>
         </Grid>
+
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <CountryDropdown
@@ -118,6 +122,7 @@ const Shipping = () => {
             />
           </Grid>
         </Grid>
+
         <Button
           type="submit"
           variant="contained"

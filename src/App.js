@@ -28,6 +28,7 @@ import Products from "./components/Product/Products";
 import ProductDetails from "./components/Product/ProductDetails";
 import Cart from "./components/Cart/Cart";
 import Shipping from "./components/Shipping/Shipping";
+import ConfirmOrder from "./components/ConfirmOrder/ConfirmOrder";
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
             <Route path="me/update" element={<UpdateProfile />} />
             <Route path="password/update" element={<UpdatePassword />} />
             <Route path="/shipping" element={<Shipping />} />
+            <Route path="/confirm-order" element={<ConfirmOrder />} />
 
             <Route path="/authorized" element={<AuthorizedRoute />}>
               <Route path="dashboard" element={<Dashboard />} />

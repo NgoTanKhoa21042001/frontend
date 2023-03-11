@@ -40,6 +40,7 @@ const Login = () => {
       email,
       password,
     };
+    // plain object
     dispatch(login({ jsonData, toast }));
     navigate("/");
   };

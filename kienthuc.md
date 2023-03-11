@@ -91,3 +91,23 @@ Trong sản phẩm, "stock" được dùng để chỉ số lượng sản phẩ
 # useLocation
 
 useLocation là một hook được React Router Dom cung cấp trong thư viện react-router để giúp các thành phần React truy cập và sử dụng các thông tin về vị trí (location) của URL hiện tại được trình duyệt hiển thị. Hook này trả về một đối tượng chứa các thuộc tính như pathname, search, hash, state,... để các thành phần có thể sử dụng thông tin đó để điều hướng đến các trang khác hoặc hiển thị dữ liệu tương ứng.
+
+# variant h5 :
+
+Cụ thể, variant="h5" có nghĩa là chữ được sử dụng cho phần tử <Typography> sẽ có kiểu như tiêu đề cấp 5 (h5) trong HTML. Kiểu chữ này thường được sử dụng để tạo ra các đoạn văn bản có font chữ nhỏ hơn so với tiêu đề cấp 1 (h1), nhưng vẫn có tính năng nổi bật so với các phần còn lại trên trang web.
+
+# createAsyncThunk:
+
+createAsyncThunk là một hàm được cung cấp bởi Redux Toolkit, giúp bạn tự động tạo ra một action creator để xử lý các tác vụ bất đồng bộ (async) trong ứng dụng Redux một cách đơn giản và tiện lợi.
+
+createAsyncThunk giúp bạn định nghĩa một hàm bất đồng bộ (async function) và tạo ra hai action creators với các tên thông thường được đặt tên là "pending" và "fulfilled" để các reducers của Redux có thể xử lý các trạng thái khác nhau của tác vụ.
+
+Ví dụ, với createAsyncThunk, bạn có thể xử lý các tác vụ bất đồng bộ như lấy dữ liệu từ server, gửi các yêu cầu HTTP, hoặc lưu trữ dữ liệu vào cơ sở dữ liệu, và xử lý các kết quả của chúng một cách linh hoạt.
+
+Về cơ bản, createAsyncThunk giúp viết code với Redux thuận tiện hơn và giúp giảm đi sự phức tạp của code khi xử lý các tác vụ bất đồng bộ trong Redux.
+
+# mutate object
+
+Mutate object là thay đổi trực tiếp các giá trị trong một đối tượng bằng cách thêm, xóa hoặc sửa đổi thuộc tính của đối tượng. Khi thực hiện mutate object, đối tượng sẽ bị thay đổi trực tiếp trong bộ nhớ, và những phần khác của code sử dụng đối tượng đó có thể bị ảnh hưởng.
+
+Ví dụ, khi thêm một thuộc tính vào đối tượng bằng cách sử dụng cú pháp gán obj.prop = value, thì đối tượng ban đầu sẽ bị thay đổi và giá trị thuộc tính mới sẽ được thêm vào đối tượng đó. Tương tự, các phương thức như .push () và .splice () cũng là mutate object vì chúng thay đổi trực tiếp nội dung của mảng mà chúng ta đang làm việ
