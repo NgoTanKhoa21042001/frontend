@@ -71,7 +71,7 @@ const AuthMenu = () => {
   };
   const navigate = useNavigate();
   const profile = () => navigate("/profile");
-  const orders = () => navigate("/orders");
+  const orders = () => navigate("/order");
   const dashboard = () => navigate("/authorized/dashboard");
   const logoutUser = () => {
     dispatch(logout({ toast }));

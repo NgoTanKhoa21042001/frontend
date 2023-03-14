@@ -77,7 +77,7 @@ const ProductCard = ({ product }) => {
   };
   useEffect(() => {
     getExist();
-  });
+  }, []);
   const linkToNavigate = () => {
     navigate(`/product/${product._id}`);
   };

@@ -29,6 +29,9 @@ import ProductDetails from "./components/Product/ProductDetails";
 import Cart from "./components/Cart/Cart";
 import Shipping from "./components/Shipping/Shipping";
 import ConfirmOrder from "./components/ConfirmOrder/ConfirmOrder";
+import Payment from "./components/Payment/Payment";
+import OrderSuccess from "./components/Payment/OrderSuccess";
+import MyOrders from "./components/Order/MyOrders";
 
 function App() {
   return (
@@ -62,6 +65,9 @@ function App() {
             <Route path="password/update" element={<UpdatePassword />} />
             <Route path="/shipping" element={<Shipping />} />
             <Route path="/confirm-order" element={<ConfirmOrder />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/order/success" element={<OrderSuccess />} />
+            <Route path="/order" element={<MyOrders />} />
 
             <Route path="/authorized" element={<AuthorizedRoute />}>
               <Route path="dashboard" element={<Dashboard />} />

@@ -111,3 +111,7 @@ Về cơ bản, createAsyncThunk giúp viết code với Redux thuận tiện h�
 Mutate object là thay đổi trực tiếp các giá trị trong một đối tượng bằng cách thêm, xóa hoặc sửa đổi thuộc tính của đối tượng. Khi thực hiện mutate object, đối tượng sẽ bị thay đổi trực tiếp trong bộ nhớ, và những phần khác của code sử dụng đối tượng đó có thể bị ảnh hưởng.
 
 Ví dụ, khi thêm một thuộc tính vào đối tượng bằng cách sử dụng cú pháp gán obj.prop = value, thì đối tượng ban đầu sẽ bị thay đổi và giá trị thuộc tính mới sẽ được thêm vào đối tượng đó. Tương tự, các phương thức như .push () và .splice () cũng là mutate object vì chúng thay đổi trực tiếp nội dung của mảng mà chúng ta đang làm việ
+
+# credentials
+
+credentials thường được sử dụng để lưu trữ thông tin đăng nhập của người dùng, chẳng hạn như tên đăng nhập, mật khẩu, mã thông báo (token) hoặc bất kỳ thông tin đăng nhập nào khác. Thông tin này thường được lưu trữ trong store, và có thể được truy cập thông qua các selectors hoặc action creators để thực hiện các thao tác như kiểm tra quyền truy cập hoặc hiển thị thông tin người dùng đăng nhập.

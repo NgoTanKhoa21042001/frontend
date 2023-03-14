@@ -171,7 +171,7 @@ const authSlice = createSlice({
     },
   },
 });
-
+// - Dòng đầu tiên, selectMutationResult, là một selector function, nhận vào một tham số state, và trả về giá trị state.auth.mutationResult. Selector function là các hàm cho phép lấy ra những giá trị cụ thể mà bạn cần từ state trong Redux.
 export const selectMutationResult = (state) => state.auth.mutationResult;
 export const selectLoggedInUser = (state) => state.auth.credentials;
 export const { resetMutationResult } = authSlice.actions;
