@@ -32,6 +32,7 @@ import ConfirmOrder from "./components/ConfirmOrder/ConfirmOrder";
 import Payment from "./components/Payment/Payment";
 import OrderSuccess from "./components/Payment/OrderSuccess";
 import MyOrders from "./components/Order/MyOrders";
+import OrderDetails from "./components/Order/OrderDetails";
 
 function App() {
   return (
@@ -68,6 +69,7 @@ function App() {
             <Route path="/payment" element={<Payment />} />
             <Route path="/order/success" element={<OrderSuccess />} />
             <Route path="/order" element={<MyOrders />} />
+            <Route path="/order/:id" element={<OrderDetails />} />
 
             <Route path="/authorized" element={<AuthorizedRoute />}>
               <Route path="dashboard" element={<Dashboard />} />

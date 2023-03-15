@@ -14,11 +14,25 @@ export const createOrder = createAsyncThunk(
     }
   }
 );
+// get my order
+export const getMyOrders = createAsyncThunk(
+  "order/getMyOrders",
+  async ({ toast }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPrivate.get("/orders");
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
 
 const orderSlice = createSlice({
   name: "order",
   initialState: {
     mutationResult: { success: false },
+    orderlist: { orders: [] },
   },
   reducers: {
     resetMutationResult: (state) => {
@@ -38,10 +52,23 @@ const orderSlice = createSlice({
       state.mutationResult.loading = false;
       state.mutationResult.error = action.payload;
     },
+    //get my orders
+    [getMyOrders.pending]: (state, action) => {
+      state.orderlist.loading = true;
+    },
+    [getMyOrders.fulfilled]: (state, action) => {
+      state.orderlist.loading = false;
+      state.orderlist.orders = action.payload.orders;
+    },
+    [getMyOrders.rejected]: (state, action) => {
+      state.orderlist.loading = false;
+      state.orderlist.error = action.payload;
+    },
   },
 });
 
 export const selectOrderMutationResult = (state) => state.order.mutationResult;
+export const selectAllOrders = (state) => state.order.orderlist;
 export const { resetMutationResult } = orderSlice.actions;
 export default orderSlice.reducer;
 
