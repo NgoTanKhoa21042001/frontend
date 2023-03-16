@@ -254,7 +254,7 @@ const ConfirmOrder = () => {
               variant="button"
               sx={{ textAlign: "center" }}
             >
-              Orders Items Info
+              Orders Info
             </Typography>
           </Box>
           <Box>
