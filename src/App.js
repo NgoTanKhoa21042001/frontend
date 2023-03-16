@@ -33,6 +33,7 @@ import Payment from "./components/Payment/Payment";
 import OrderSuccess from "./components/Payment/OrderSuccess";
 import MyOrders from "./components/Order/MyOrders";
 import OrderDetails from "./components/Order/OrderDetails";
+import OrderList from "./components/Authorized/Order/OrderList";
 
 function App() {
   return (
@@ -89,6 +90,8 @@ function App() {
               <Route path="product" element={<AddNewProduct />} />
               <Route path="productlist" element={<ProductList />} />
               <Route path="product/:id" element={<UpdateProduct />} />
+
+              <Route path="orderlist" element={<OrderList />} />
             </Route>
           </Route>
         </Route>

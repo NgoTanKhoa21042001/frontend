@@ -38,6 +38,32 @@ export const getOrderDetails = createAsyncThunk(
     }
   }
 );
+export const getAllOrders = createAsyncThunk(
+  "order/getAllOrders",
+  async ({ toast }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPrivate.get("/authorized/orders");
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const deleteOrder = createAsyncThunk(
+  "order/deleteOrder",
+  async ({ id, toast }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPrivate.delete(`/authorized/orders/${id}`);
+      toast.success("Order deleted.");
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
 
 const orderSlice = createSlice({
   name: "order",
@@ -89,6 +115,29 @@ const orderSlice = createSlice({
       state.orderDetails.error = action.payload;
     },
     //get all orders by authorised role
+    [getAllOrders.pending]: (state, action) => {
+      state.orderlist.loading = true;
+    },
+    [getAllOrders.fulfilled]: (state, action) => {
+      state.orderlist.loading = false;
+      state.orderlist.orders = action.payload.orders;
+    },
+    [getAllOrders.rejected]: (state, action) => {
+      state.orderlist.loading = false;
+      state.orderlist.error = action.payload;
+    },
+    // delete order
+    [deleteOrder.pending]: (state, action) => {
+      state.mutationResult.loading = true;
+    },
+    [deleteOrder.fulfilled]: (state, action) => {
+      state.mutationResult.loading = false;
+      state.mutationResult.success = action.payload;
+    },
+    [deleteOrder.rejected]: (state, action) => {
+      state.mutationResult.loading = false;
+      state.mutationResult.error = action.payload;
+    },
   },
 });
 export const selectOrderMutationResult = (state) => state.order.mutationResult;

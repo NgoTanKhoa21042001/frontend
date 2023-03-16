@@ -33,7 +33,7 @@ const OrderSuccess = () => {
         >
           Your order has been placed successfully.
         </Typography>
-        <Link to="/orders" style={{ marginRight: "50px" }}>
+        <Link to="/order" style={{ marginRight: "50px" }}>
           View orders
         </Link>
         <Link to="/">Go Home</Link>
