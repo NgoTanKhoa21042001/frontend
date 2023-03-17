@@ -64,6 +64,23 @@ export const deleteOrder = createAsyncThunk(
     }
   }
 );
+// update order
+export const updateOrder = createAsyncThunk(
+  "order/updateOrder",
+  async ({ id, jsonData, toast }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPrivate.put(
+        `/authorized/orders/${id}`,
+        jsonData
+      );
+      toast.success("Order updated.");
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
 
 const orderSlice = createSlice({
   name: "order",
@@ -135,6 +152,18 @@ const orderSlice = createSlice({
       state.mutationResult.success = action.payload;
     },
     [deleteOrder.rejected]: (state, action) => {
+      state.mutationResult.loading = false;
+      state.mutationResult.error = action.payload;
+    },
+    // update order
+    [updateOrder.pending]: (state, action) => {
+      state.mutationResult.loading = true;
+    },
+    [updateOrder.fulfilled]: (state, action) => {
+      state.mutationResult.loading = false;
+      state.mutationResult.success = action.payload;
+    },
+    [updateOrder.rejected]: (state, action) => {
       state.mutationResult.loading = false;
       state.mutationResult.error = action.payload;
     },

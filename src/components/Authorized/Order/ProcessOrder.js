@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
@@ -7,36 +7,67 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
+import FingerprintIcon from "@mui/icons-material/Fingerprint";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import UpdateIcon from "@mui/icons-material/Update";
+import DeliveryDiningRoundedIcon from "@mui/icons-material/DeliveryDiningRounded";
+
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
 import { useParams } from "react-router";
-import {
-  getOrderDetails,
-  selectOrderDetails,
-} from "../../redux/features/orderSlice";
-import BoxShadowLoader from "../Skeletons/BoxShadowLoader";
+
 import {
   Avatar,
   Box,
+  Button,
+  FormControl,
   Grid,
+  InputLabel,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
+  MenuItem,
+  Select,
   Typography,
 } from "@mui/material";
-import { IMAGE_BASEURL } from "../../constants/baseUrl";
-import { Link } from "react-router-dom";
-import { formatCurrency } from "../../utility/formatCurrency";
 
-const OrderDetails = () => {
+import { Link } from "react-router-dom";
+import {
+  getOrderDetails,
+  resetMutationResult,
+  selectOrderDetails,
+  selectOrderMutationResult,
+  updateOrder,
+} from "../../../redux/features/orderSlice";
+import { IMAGE_BASEURL } from "../../../constants/baseUrl";
+import { formatCurrency } from "../../../utility/formatCurrency";
+import BoxShadowLoader from "../../Skeletons/BoxShadowLoader";
+
+const ProcessOrder = () => {
   const { id } = useParams();
+  const [status, setStatus] = useState("");
   const dispatch = useDispatch();
   const { loading, order } = useSelector(selectOrderDetails);
-  console.log(order);
+  const { success } = useSelector(selectOrderMutationResult);
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (status === "") {
+      toast.error("Please select a process option");
+      return;
+    }
+    const jsonData = { status };
+    dispatch(updateOrder({ id, jsonData, toast }));
+  };
+
   useEffect(() => {
+    if (success) {
+      dispatch(resetMutationResult());
+    }
     dispatch(getOrderDetails({ id, toast }));
-  }, [id, dispatch]);
+  }, [success, id, dispatch]);
+
   return (
     <>
       {loading ? (
@@ -51,7 +82,7 @@ const OrderDetails = () => {
           >
             Order details
           </Typography>
-          {/* payment */}
+
           <Box sx={{ m: "20px 10px" }}>
             <Box className="title">
               <Avatar
@@ -69,9 +100,31 @@ const OrderDetails = () => {
                 Order Status
               </Typography>
             </Box>
-            <Box>
+            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <List>
-                {/* <ListItem>
+                <ListItem>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <FingerprintIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText primary={order && "Order Id - " + order._id} />
+                </ListItem>
+                <ListItem>
+                  <ListItemAvatar>
+                    <Avatar>
+                      <AccessTimeIcon />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={
+                      order &&
+                      "Ordered at : " + String(order.createdAt).substring(0, 10)
+                    }
+                  />
+                </ListItem>
+
+                <ListItem>
                   <ListItemAvatar>
                     <Avatar>
                       <AttachMoneyIcon />
@@ -82,7 +135,7 @@ const OrderDetails = () => {
                       ? "Paid"
                       : "Not Paid"}
                   </ListItemText>
-                </ListItem> */}
+                </ListItem>
 
                 <ListItem>
                   <ListItemAvatar>
@@ -93,6 +146,49 @@ const OrderDetails = () => {
                   <ListItemText primary={order && order.orderStatus} />
                 </ListItem>
               </List>
+              {order && order.orderStatus === "Delivered" ? (
+                <Box sx={{ mt: "20px", textAlign: "center" }}>
+                  <Avatar>
+                    <DeliveryDiningRoundedIcon />
+                  </Avatar>
+                  <Typography variant="button" component="div" gutterBottom>
+                    This product delivered.
+                  </Typography>
+                </Box>
+              ) : (
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    minWidth: "150px",
+                    mt: "20px",
+                  }}
+                >
+                  <FormControl sx={{ mb: "5px" }}>
+                    <InputLabel id="status">Select process</InputLabel>
+                    <Select
+                      labelId="status"
+                      id="status"
+                      value={status}
+                      label="process"
+                      onChange={(e) => setStatus(e.target.value)}
+                    >
+                      {order && order.orderStatus === "Processing" ? (
+                        <MenuItem value="Shipped">Shipped</MenuItem>
+                      ) : (
+                        <MenuItem value="Delivered">Delivered</MenuItem>
+                      )}
+                    </Select>
+                  </FormControl>
+                  <Button
+                    variant="contained"
+                    startIcon={<UpdateIcon />}
+                    onClick={submitHandler}
+                  >
+                    Update
+                  </Button>
+                </Box>
+              )}
             </Box>
           </Box>
 
@@ -134,13 +230,14 @@ const OrderDetails = () => {
                     <ListItemText
                       primary={
                         order &&
-                        `${order?.shippingInfo?.address}, ${order?.shippingInfo?.city}, ${order?.shippingInfo?.zipCode}, ${order?.shippingInfo?.state}, ${order?.shippingInfo?.country}`
+                        `${order?.shippingInfo?.address},${order?.shippingInfo?.city},${order?.shippingInfo?.zipCode},${order?.shippingInfo?.state},${order?.shippingInfo?.country}`
                       }
-                    ></ListItemText>
+                    />
                   </ListItem>
                 </List>
               </Box>
             </Box>
+
             <Box className="div3">
               <Box className="title">
                 <Avatar
@@ -191,6 +288,7 @@ const OrderDetails = () => {
                   ))}
               </Box>
             </Box>
+
             <Box className="div3">
               <Box className="title">
                 <Avatar
@@ -212,6 +310,19 @@ const OrderDetails = () => {
                   Orders Info
                 </Typography>
               </Box>
+
+              <Grid container>
+                <Grid item xs>
+                  <Typography variant="button" component="div">
+                    Subtotal :
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="button" component="div">
+                    {formatCurrency(order && order.itemsPrice)}
+                  </Typography>
+                </Grid>
+              </Grid>
               <Grid container>
                 <Grid item xs>
                   <Typography variant="button" component="div">
@@ -224,6 +335,7 @@ const OrderDetails = () => {
                   </Typography>
                 </Grid>
               </Grid>
+
               <Grid container>
                 <Grid item xs>
                   <Typography variant="button" component="div">
@@ -236,10 +348,11 @@ const OrderDetails = () => {
                   </Typography>
                 </Grid>
               </Grid>
+
               <Grid container>
                 <Grid item xs>
                   <Typography variant="button" component="div">
-                    Total
+                    Total :
                   </Typography>
                 </Grid>
                 <Grid item>
@@ -256,4 +369,4 @@ const OrderDetails = () => {
   );
 };
 
-export default OrderDetails;
+export default ProcessOrder;
