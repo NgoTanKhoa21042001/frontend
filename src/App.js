@@ -35,6 +35,7 @@ import MyOrders from "./components/Order/MyOrders";
 import OrderDetails from "./components/Order/OrderDetails";
 import OrderList from "./components/Authorized/Order/OrderList";
 import ProcessOrder from "./components/Authorized/Order/ProcessOrder";
+import ReviewList from "./components/Authorized/Review/ReviewList";
 
 function App() {
   return (
@@ -94,6 +95,8 @@ function App() {
 
               <Route path="orderlist" element={<OrderList />} />
               <Route path="order/:id" element={<ProcessOrder />} />
+
+              <Route path="reviewlist" element={<ReviewList />} />
             </Route>
           </Route>
         </Route>
