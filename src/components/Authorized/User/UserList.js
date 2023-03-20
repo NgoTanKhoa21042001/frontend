@@ -2,59 +2,65 @@ import React, { useEffect } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  deleteOrder,
-  getAllOrders,
+  getAllUsers,
   resetMutationResult,
-  selectAllOrders,
-  selectOrderMutationResult,
-} from "../../../redux/features/orderSlice";
+  selectUserList,
+  selectMutationResult,
+  deleteUser,
+} from "../../../redux/features/authSlice";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { IMAGE_BASEURL } from "../../../constants/baseUrl";
 
 import { Box, Typography, IconButton, Tooltip } from "@mui/material";
-import DeleteForeeverIcon from "@mui/icons-material/DeleteForever";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import BoxShadowLoader from "../../../components/Skeletons/BoxShadowLoader";
 
-const OrderList = () => {
+const UserList = () => {
   const dispatch = useDispatch();
-  const { loading, orders } = useSelector(selectAllOrders);
-  const { success } = useSelector(selectOrderMutationResult);
+  const { loading, users } = useSelector(selectUserList);
+  const { success } = useSelector(selectMutationResult);
 
   const deleteHandler = (id) => {
-    dispatch(deleteOrder({ id, toast }));
+    dispatch(deleteUser({ id, toast }));
   };
 
   const columns = [
     {
-      field: "id",
-      headerName: "Order ID",
+      field: "image",
+      headerName: "Avatar",
       headerClassName: "gridHeader",
-      flex: 1,
-      maxWidth: 90,
+      flex: 0.4,
+      minWidth: 60,
+      renderCell: (params) => {
+        return params.value === "" ? (
+          ""
+        ) : (
+          <img src={params.value} height="100%" alt="" />
+        );
+      },
     },
     {
-      field: "status",
-      headerName: "Status",
+      field: "name",
+      headerName: "Name",
       headerClassName: "gridHeader",
       flex: 1,
-      minWidth: 100,
+      minWidth: 170,
     },
     {
-      field: "itemsQty",
-      headerName: "Quantity",
+      field: "email",
+      headerName: "Email",
       headerClassName: "gridHeader",
-      flex: 1,
-      minWidth: 100,
-      type: "Number",
+      flex: 1.5,
+      minWidth: 250,
     },
     {
-      field: "amount",
-      headerName: "Amount",
+      field: "role",
+      headerName: "Role",
       headerClassName: "gridHeader",
-      flex: 1,
-      minWidth: 80,
-      type: "Number",
+      flex: 1.5,
+      minWidth: 250,
     },
     {
       field: "actions",
@@ -67,7 +73,7 @@ const OrderList = () => {
       renderCell: (params) => {
         return (
           <>
-            <Link to={`/authorized/order/${params.getValue(params.id, "id")}`}>
+            <Link to={`/authorized/user/${params.getValue(params.id, "id")}`}>
               <Tooltip title="Edit" placement="top">
                 <EditIcon
                   sx={{ width: "30px", height: "30px", color: "#1976d2" }}
@@ -81,7 +87,7 @@ const OrderList = () => {
                 component="span"
                 onClick={() => deleteHandler(params.getValue(params.id, "id"))}
               >
-                <DeleteForeeverIcon sx={{ width: "30px", height: "30px" }} />
+                <DeleteForeverIcon sx={{ width: "30px", height: "30px" }} />
               </IconButton>
             </Tooltip>
           </>
@@ -90,20 +96,21 @@ const OrderList = () => {
     },
   ];
   const rows = [];
-  orders &&
-    orders.forEach((order) => {
+  users &&
+    users.forEach((user) => {
       rows.push({
-        id: order._id,
-        status: order.orderStatus,
-        itemsQty: order.orderItems.length,
-        amount: order.totalPrice,
+        id: user._id,
+        name: user.name,
+        image: IMAGE_BASEURL + user.avatar.url,
+        email: user.email,
+        role: user.roles,
       });
     });
   useEffect(() => {
     if (success) {
       dispatch(resetMutationResult());
     }
-    dispatch(getAllOrders({ toast }));
+    dispatch(getAllUsers({ toast }));
   }, [dispatch, success]);
 
   return (
@@ -117,7 +124,7 @@ const OrderList = () => {
       }}
     >
       <Typography component="h1" variant="h5" sx={{ m: 4 }}>
-        Full list of brands
+        Full list of users
       </Typography>
       {loading ? (
         <BoxShadowLoader />
@@ -133,4 +140,4 @@ const OrderList = () => {
   );
 };
 
-export default OrderList;
+export default UserList;

@@ -1,6 +1,25 @@
 import React, { useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import {
+  getOrderDetails,
+  selectOrderDetails,
+} from "../../redux/features/orderSlice";
+import BoxShadowLoader from "../Skeletons/BoxShadowLoader";
+import { IMAGE_BASEURL } from "../../constants/baseUrl";
+import { formatCurrency } from "../../utility/formatCurrency";
+
+import {
+  Box,
+  Typography,
+  Avatar,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Grid,
+} from "@mui/material";
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import PhoneIcon from "@mui/icons-material/Phone";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -9,34 +28,17 @@ import FactCheckIcon from "@mui/icons-material/FactCheck";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
-import { useParams } from "react-router";
-import {
-  getOrderDetails,
-  selectOrderDetails,
-} from "../../redux/features/orderSlice";
-import BoxShadowLoader from "../Skeletons/BoxShadowLoader";
-import {
-  Avatar,
-  Box,
-  Grid,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  Typography,
-} from "@mui/material";
-import { IMAGE_BASEURL } from "../../constants/baseUrl";
-import { Link } from "react-router-dom";
-import { formatCurrency } from "../../utility/formatCurrency";
 
 const OrderDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const { loading, order } = useSelector(selectOrderDetails);
   console.log(order);
+
   useEffect(() => {
     dispatch(getOrderDetails({ id, toast }));
   }, [id, dispatch]);
+
   return (
     <>
       {loading ? (
@@ -51,7 +53,7 @@ const OrderDetails = () => {
           >
             Order details
           </Typography>
-          {/* payment */}
+
           <Box sx={{ m: "20px 10px" }}>
             <Box className="title">
               <Avatar
@@ -71,7 +73,7 @@ const OrderDetails = () => {
             </Box>
             <Box>
               <List>
-                {/* <ListItem>
+                <ListItem>
                   <ListItemAvatar>
                     <Avatar>
                       <AttachMoneyIcon />
@@ -82,7 +84,7 @@ const OrderDetails = () => {
                       ? "Paid"
                       : "Not Paid"}
                   </ListItemText>
-                </ListItem> */}
+                </ListItem>
 
                 <ListItem>
                   <ListItemAvatar>
@@ -134,13 +136,14 @@ const OrderDetails = () => {
                     <ListItemText
                       primary={
                         order &&
-                        `${order?.shippingInfo?.address}, ${order?.shippingInfo?.city}, ${order?.shippingInfo?.zipCode}, ${order?.shippingInfo?.state}, ${order?.shippingInfo?.country}`
+                        `${order?.shippingInfo?.address},${order?.shippingInfo?.city},${order?.shippingInfo?.zipCode},${order?.shippingInfo?.state},${order?.shippingInfo?.country}`
                       }
-                    ></ListItemText>
+                    />
                   </ListItem>
                 </List>
               </Box>
             </Box>
+
             <Box className="div3">
               <Box className="title">
                 <Avatar
@@ -191,6 +194,7 @@ const OrderDetails = () => {
                   ))}
               </Box>
             </Box>
+
             <Box className="div3">
               <Box className="title">
                 <Avatar
@@ -212,6 +216,19 @@ const OrderDetails = () => {
                   Orders Info
                 </Typography>
               </Box>
+
+              <Grid container>
+                <Grid item xs>
+                  <Typography variant="button" component="div">
+                    Subtotal :
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Typography variant="button" component="div">
+                    {formatCurrency(order && order.itemsPrice)}
+                  </Typography>
+                </Grid>
+              </Grid>
               <Grid container>
                 <Grid item xs>
                   <Typography variant="button" component="div">
@@ -224,6 +241,7 @@ const OrderDetails = () => {
                   </Typography>
                 </Grid>
               </Grid>
+
               <Grid container>
                 <Grid item xs>
                   <Typography variant="button" component="div">
@@ -236,10 +254,11 @@ const OrderDetails = () => {
                   </Typography>
                 </Grid>
               </Grid>
+
               <Grid container>
                 <Grid item xs>
                   <Typography variant="button" component="div">
-                    Total
+                    Total :
                   </Typography>
                 </Grid>
                 <Grid item>

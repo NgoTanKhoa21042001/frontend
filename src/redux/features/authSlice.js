@@ -97,10 +97,73 @@ export const updateProfile = createAsyncThunk(
     }
   }
 );
-// Đây là đoạn code sử dụng thư viện Redux Toolkit để tạo một "slice" của Redux store để quản lý trạng thái liên quan đến việc xác thực (authentication).
+
+export const getAllUsers = createAsyncThunk(
+  "auth/getAllUsers",
+  async ({ toast }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPrivate.get(`users`);
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+// delete user
+
+export const deleteUser = createAsyncThunk(
+  "auth/deleteUser",
+  // formData is an object that contains data to be sent to the server
+  async ({ id, toast }, { rejectWithValue }) => {
+    try {
+      // the axiosPublic library is used to make a POST request to a URL /register with formData as the payload
+      //  If the request is successful, the data property of the response is extracted using destructuring assignment,
+      const { data } = await axiosPrivate.delete(`users/${id}`);
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+// user details
+export const getUserDetails = createAsyncThunk(
+  "auth/getUserDetails",
+  async ({ id, toast }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPrivate.get(`users/${id}`);
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+// update role user
+export const updateUserRole = createAsyncThunk(
+  "auth/updateUserRole",
+  async ({ id, jsonData, toast }, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosPrivate.put(`users/${id}`, jsonData);
+      toast.success("User updated.");
+      return data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
-  initialState: { mutationResult: { success: false }, credentials: {} },
+  initialState: {
+    mutationResult: { success: false },
+    credentials: {},
+    userlist: { users: [] },
+    userDetails: { user: [] },
+  },
   //  reducers là một object chứa các hàm reducer để thay đổi trạng thái của slice. Trong trường hợp này, chỉ có một hàm resetMutationResult, có tác dụng đặt lại giá trị success của mutationResult về false.
   reducers: {
     resetMutationResult: (state, action) => {
@@ -108,9 +171,6 @@ const authSlice = createSlice({
     },
   },
   extraReducers: {
-    // register
-    // sẽ trải qua 3 giai đoạn
-    // lúc này đang chờ phản hồi
     [registration.pending]: (state, action) => {
       state.mutationResult.loading = true;
     },
@@ -169,10 +229,62 @@ const authSlice = createSlice({
       state.mutationResult.loading = false;
       state.credentials.error = action.payload;
     },
+    // user list
+    [getAllUsers.pending]: (state, action) => {
+      state.userlist.loading = true;
+    },
+    [getAllUsers.fulfilled]: (state, action) => {
+      state.userlist.loading = false;
+      state.userlist.users = action.payload.users;
+    },
+    [getAllUsers.rejected]: (state, action) => {
+      state.userlist.loading = false;
+      state.userlist.error = action.payload;
+    },
+    // delete user
+    [deleteUser.pending]: (state, action) => {
+      state.mutationResult.loading = true;
+    },
+    [deleteUser.fulfilled]: (state, action) => {
+      state.mutationResult.loading = false;
+      state.mutationResult.success = action.payload.success;
+    },
+    [deleteUser.rejected]: (state, action) => {
+      state.mutationResult.loading = false;
+      state.credentials.error = action.payload;
+    },
+
+    // user details
+    [getUserDetails.pending]: (state, action) => {
+      state.userDetails.loading = true;
+    },
+    [getUserDetails.fulfilled]: (state, action) => {
+      state.userDetails.loading = false;
+      state.userDetails.user = action.payload.user;
+    },
+    [getUserDetails.rejected]: (state, action) => {
+      state.userDetails.loading = false;
+      state.userDetails.error = action.payload;
+    },
+    // update role
+    [updateUserRole.pending]: (state, action) => {
+      state.mutationResult.loading = true;
+    },
+    [updateUserRole.fulfilled]: (state, action) => {
+      state.mutationResult.loading = false;
+      state.mutationResult.success = action.payload.success;
+    },
+    [updateUserRole.rejected]: (state, action) => {
+      state.mutationResult.loading = false;
+      state.credentials.error = action.payload;
+    },
   },
 });
 // - Dòng đầu tiên, selectMutationResult, là một selector function, nhận vào một tham số state, và trả về giá trị state.auth.mutationResult. Selector function là các hàm cho phép lấy ra những giá trị cụ thể mà bạn cần từ state trong Redux.
 export const selectMutationResult = (state) => state.auth.mutationResult;
 export const selectLoggedInUser = (state) => state.auth.credentials;
+export const selectUserList = (state) => state.auth.userlist;
+export const selectUserDetails = (state) => state.auth.userDetails;
+
 export const { resetMutationResult } = authSlice.actions;
 export default authSlice.reducer;

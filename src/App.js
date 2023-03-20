@@ -36,6 +36,8 @@ import OrderDetails from "./components/Order/OrderDetails";
 import OrderList from "./components/Authorized/Order/OrderList";
 import ProcessOrder from "./components/Authorized/Order/ProcessOrder";
 import ReviewList from "./components/Authorized/Review/ReviewList";
+import UserList from "./components/Authorized/User/UserList";
+import UpdateRole from "./components/Authorized/User/UpdateRole";
 
 function App() {
   return (
@@ -76,27 +78,23 @@ function App() {
 
             <Route path="/authorized" element={<AuthorizedRoute />}>
               <Route path="dashboard" element={<Dashboard />} />
-
               <Route path="brand" element={<AddNewBrand />} />
               <Route path="brandlist" element={<BrandList />} />
               <Route path="brand/:id" element={<UpdateBrand />} />
-
               <Route path="category" element={<AddNewCategory />} />
               <Route path="categorylist" element={<CategoryList />} />
               <Route path="category/:id" element={<UpdateCategory />} />
-
               <Route path="store" element={<AddNewStore />} />
               <Route path="storelist" element={<StoreList />} />
               <Route path="store/:id" element={<UpdateStore />} />
-
               <Route path="product" element={<AddNewProduct />} />
               <Route path="productlist" element={<ProductList />} />
               <Route path="product/:id" element={<UpdateProduct />} />
-
               <Route path="orderlist" element={<OrderList />} />
               <Route path="order/:id" element={<ProcessOrder />} />
-
               <Route path="reviewlist" element={<ReviewList />} />
+              <Route path="userlist" element={<UserList />} />
+              <Route path="user/:id" element={<UpdateRole />} />
             </Route>
           </Route>
         </Route>
