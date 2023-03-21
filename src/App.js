@@ -38,6 +38,7 @@ import ProcessOrder from "./components/Authorized/Order/ProcessOrder";
 import ReviewList from "./components/Authorized/Review/ReviewList";
 import UserList from "./components/Authorized/User/UserList";
 import UpdateRole from "./components/Authorized/User/UpdateRole";
+import Home from "./components/Home/Home";
 
 function App() {
   return (
@@ -58,7 +59,7 @@ function App() {
       {/* Same as */}
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          {/* <Route index element={<Home />} />   */}
+          <Route index element={<Home />} />
           <Route path="product" element={<Products />} />
           <Route path="product/:id" element={<ProductDetails />} />
           <Route path="about-us" element={<Aboutus />} />
