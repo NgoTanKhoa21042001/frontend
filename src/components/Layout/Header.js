@@ -9,7 +9,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import ContactPageIcon from "@mui/icons-material/ContactPage";
-import "./Header.css";
+import "./style.css";
 import DrawerMenu from "./DrawerMenu";
 import AuthMenu from "./AuthMenu";
 import { useSelector } from "react-redux";

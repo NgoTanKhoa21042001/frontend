@@ -74,11 +74,16 @@ Vì vậy, khác nhau giữa axiosPrivate và axiosPublic là trong cách chúng
 8. Đơn hàng: Sau khi khách hàng hoàn tất quá trình thanh toán, họ sẽ nhận được thông báo về đơn hàng của mình, bao gồm thông tin về sản phẩm, giá cả, địa chỉ nhận hàng, thời gian giao hàng, và các thông tin khác.
 
 9. khả năng tương thích trên mọi thiết bị
-10. Phân chia role admin, seller, và user: admin có thể quản lí user, quản lí sản phẩm , quản lí đơn hàng
-11. users có thể đánh giá sản phẩm
+10. role admin : admin có thể quản lí user, quản lí sản phẩm , cung cấp thông tin về tên, giá, mô tả và hình ảnh sản phẩm.
+
+- quản trị viên quản lý các đơn hàng của khách hàng, theo dõi trạng thái đơn hàng và cập nhật thông tin vận chuyển.
+
+11. seller có thể edit store và product thuộc store
 12. Tích hợp dịch vụ vận chuyển: Đây là phần tích hợp dịch vụ vận chuyển để cung cấp cho khách hàng các tùy chọn vận chuyển và tính phí vận chuyển phù hợp với địa chỉ giao hàng của họ.
 
 13. Persist login
+14. send mail, contact admin
+15. filter product: Cho phép khách hàng tìm kiếm sản phẩm theo tên, danh mục hoặc từ khóa
 
 # ReactJS
 

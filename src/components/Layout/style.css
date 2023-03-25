@@ -68,6 +68,7 @@ header a:hover {
 .active {
   color: #dadada;
 }
+
 @media only screen and (max-width: 768px) {
   .mobile-menu {
     display: block;
