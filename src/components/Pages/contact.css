@@ -1,6 +1,7 @@
 .contact-form {
   width: 400px;
   margin: 0 auto;
+  padding-bottom: 50px;
 }
 
 .form {
@@ -51,4 +52,10 @@ input[type="submit"] {
   background: #88acbc;
   color: white;
   border: none;
+}
+.contact__bgr {
+  background: url("https://source.unsplash.com/random");
+  background-size: cover;
+  background-position: center center;
+  height: 65vh;
 }
