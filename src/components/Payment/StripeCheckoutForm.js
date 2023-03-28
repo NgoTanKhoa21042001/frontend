@@ -67,7 +67,7 @@ const StripeCheckoutForm = (props) => {
       );
       const client_secret = data.clientSecret;
       if (!stripe || !elements) return;
-
+      // client_secret là mã bí mật của khách hàng được trả về từ API Stripe, và payment_method là đối tượng chứa thông tin về phương thức thanh toán được sử dụng
       const result = await stripe.confirmCardPayment(client_secret, {
         payment_method: {
           card: elements.getElement(CardNumberElement),

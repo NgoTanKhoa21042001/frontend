@@ -12,7 +12,12 @@ import {
   List,
   ListItemButton,
   ListItemText,
+  Stack,
+  Pagination,
+  PaginationItem,
 } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { useDispatch, useSelector } from "react-redux";
@@ -25,15 +30,17 @@ import ProductCard from "./ProductCard";
 import ProductCatdSkeleton from "../Skeletons/ProductCatdSkeleton";
 const Product = () => {
   const dispatch = useDispatch();
-  const { loading, products, filteredProductsCount } =
+  const [currentPage, setCurrentPage] = useState(1);
+  const { loading, products, filteredProductsCount, resultPerPage } =
     useSelector(selectAllProducts);
   console.log(products);
   useEffect(() => {
-    dispatch(getProducts({ toast }));
-  }, [dispatch]);
+    dispatch(getProducts({ currentPage, toast }));
+  }, [dispatch, currentPage]);
+  const handleChange = () => {};
   return (
     <Box className="wrapper">
-      <Box className="filter-box">cdc</Box>
+      <Box className="filter-box"></Box>
       <Box className="container">
         <Typography
           variant="div"
@@ -64,6 +71,17 @@ const Product = () => {
             ))}
           </Box>
         )}
+        {/* Pagination */}
+        <Stack spacing={2}>
+          <Pagination
+            count={Math.ceil(filteredProductsCount / resultPerPage)}
+            page={currentPage}
+            onChange={(e, v) => setCurrentPage(v)}
+            color="primary"
+            showFirstButton
+            showLastButton
+          />
+        </Stack>
       </Box>
     </Box>
   );

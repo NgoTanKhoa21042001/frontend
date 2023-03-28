@@ -45,6 +45,7 @@ import { formatCurrency } from "../../../utility/formatCurrency";
 import BoxShadowLoader from "../../Skeletons/BoxShadowLoader";
 
 const ProcessOrder = () => {
+  // phần này trong dashboard
   const { id } = useParams();
   const [status, setStatus] = useState("");
   const dispatch = useDispatch();
@@ -124,7 +125,7 @@ const ProcessOrder = () => {
                   />
                 </ListItem>
 
-                {/* <ListItem>
+                <ListItem>
                   <ListItemAvatar>
                     <Avatar>
                       <AttachMoneyIcon />
@@ -135,7 +136,7 @@ const ProcessOrder = () => {
                       ? "Paid"
                       : "Not Paid"}
                   </ListItemText>
-                </ListItem> */}
+                </ListItem>
 
                 <ListItem>
                   <ListItemAvatar>

@@ -4,9 +4,9 @@ import axiosPrivate from "../axiosPrivate";
 
 export const getProducts = createAsyncThunk(
   "product/getProducts",
-  async ({ toast }, { rejectWithValue }) => {
+  async ({ currentPage, toast }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosPrivate.get(`/products`);
+      const { data } = await axiosPrivate.get(`/products?&page=${currentPage}`);
       return data;
     } catch (error) {
       toast.error(error.response.data.message);
