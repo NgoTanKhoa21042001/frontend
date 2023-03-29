@@ -4,9 +4,28 @@ import axiosPrivate from "../axiosPrivate";
 
 export const getProducts = createAsyncThunk(
   "product/getProducts",
-  async ({ currentPage, toast }, { rejectWithValue }) => {
+  async (
+    { search, priceRange, category, ratingsfilter, currentPage, toast },
+    { rejectWithValue }
+  ) => {
     try {
-      const { data } = await axiosPrivate.get(`/products?&page=${currentPage}`);
+      let key = "keyword=" + search;
+      let page = "&page=" + currentPage;
+      let price =
+        "&price[gte]=" + priceRange[0] + "&price[lte]=" + priceRange[1];
+      let cat = null;
+      if (category) {
+        cat = "&category=" + category;
+      } else {
+        cat = "";
+      }
+      let ratings = "";
+      if (ratingsfilter > 0 || ratingsfilter !== "undefined") {
+        ratings = "&ratings[gte]=" + ratingsfilter;
+      }
+
+      let productParams = key + page + price + cat + ratings;
+      const { data } = await axiosPrivate.get(`/products?${productParams}`);
       return data;
     } catch (error) {
       toast.error(error.response.data.message);

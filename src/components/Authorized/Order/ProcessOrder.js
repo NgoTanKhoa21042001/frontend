@@ -125,7 +125,7 @@ const ProcessOrder = () => {
                   />
                 </ListItem>
 
-                <ListItem>
+                {/* <ListItem>
                   <ListItemAvatar>
                     <Avatar>
                       <AttachMoneyIcon />
@@ -136,7 +136,7 @@ const ProcessOrder = () => {
                       ? "Paid"
                       : "Not Paid"}
                   </ListItemText>
-                </ListItem>
+                </ListItem> */}
 
                 <ListItem>
                   <ListItemAvatar>
