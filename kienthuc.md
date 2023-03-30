@@ -120,3 +120,11 @@ Ví dụ, khi thêm một thuộc tính vào đối tượng bằng cách sử d
 # credentials
 
 credentials thường được sử dụng để lưu trữ thông tin đăng nhập của người dùng, chẳng hạn như tên đăng nhập, mật khẩu, mã thông báo (token) hoặc bất kỳ thông tin đăng nhập nào khác. Thông tin này thường được lưu trữ trong store, và có thể được truy cập thông qua các selectors hoặc action creators để thực hiện các thao tác như kiểm tra quyền truy cập hoặc hiển thị thông tin người dùng đăng nhập.
+
+# IntersectionObserver
+
+IntersectionObserver là một API của trình duyệt cho phép quan sát sự kiện khi một phần tử được hiển thị hoặc ẩn đi trên trang web.
+
+# payload
+
+payload thường được sử dụng để chứa dữ liệu được truyền từ action đến reducer để cập nhật state của ứng dụng.

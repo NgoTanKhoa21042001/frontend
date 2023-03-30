@@ -107,12 +107,15 @@ const productSlice = createSlice({
   name: "product",
   initialState: {
     mutationResult: { success: false },
-    productlist: {},
+    productlist: { products: [] },
     productDetails: {},
   },
   reducers: {
     resetMutationResult: (state) => {
       state.mutationResult.success = false;
+    },
+    resetProducts: (state) => {
+      state.productlist.products = [];
     },
   },
   extraReducers: {
@@ -122,7 +125,10 @@ const productSlice = createSlice({
     },
     [getProducts.fulfilled]: (state, action) => {
       state.productlist.loading = false;
-      state.productlist.products = action.payload.products;
+      state.productlist.products = [
+        ...state.productlist.products,
+        ...action.payload.products,
+      ];
       state.productlist.productCount = action.payload.productCount;
       state.productlist.resultPerPage = action.payload.resultPerPage;
       state.productlist.filteredProductsCount =

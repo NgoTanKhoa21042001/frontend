@@ -27,7 +27,7 @@ import { toast } from "react-toastify";
 import AddShoppingCart from "@mui/icons-material/AddShoppingCart";
 import { useNavigate } from "react-router";
 
-const ProductCard = ({ product }) => {
+const ProductCard = React.forwardRef(({ product }, ref) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [exist, setExist] = useState(false);
@@ -176,18 +176,31 @@ const ProductCard = ({ product }) => {
         </Card>
       </CardActionArea>
       <Box sx={{ mt: 2 }}>
-        <Button
-          variant="outlined"
-          fullWidth
-          color={color}
-          startIcon={icon}
-          onClick={cartHandler}
-        >
-          {text}
-        </Button>
+        {ref ? (
+          <Button
+            variant="outlined"
+            ref={ref}
+            fullWidth
+            color={color}
+            startIcon={icon}
+            onClick={cartHandler}
+          >
+            {text}
+          </Button>
+        ) : (
+          <Button
+            variant="outlined"
+            fullWidth
+            color={color}
+            startIcon={icon}
+            onClick={cartHandler}
+          >
+            {text}
+          </Button>
+        )}
       </Box>
     </Box>
   );
-};
+});
 
 export default ProductCard;

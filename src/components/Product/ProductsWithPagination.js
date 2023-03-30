@@ -12,6 +12,10 @@ import {
   List,
   ListItemButton,
   ListItemText,
+  Stack,
+  Pagination,
+  PaginationItem,
+  ListItemIcon,
 } from "@mui/material";
 import InboxIcon from "@mui/icons-material/Inbox";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -19,7 +23,6 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getProducts,
-  resetProducts,
   selectAllProducts,
 } from "../../redux/features/productSlice";
 import "./Product.css";
@@ -29,12 +32,11 @@ import {
   getCategories,
   selectAllCategories,
 } from "../../redux/features/categorySlice";
-const Product = () => {
+const ProductsWithPagination = () => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [hasMorepage, setHasMorepage] = useState(true);
   let minPrice = 1;
   let maxPrice = 100000;
   const [priceRange, setPriceRange] = useState([minPrice, maxPrice]);
@@ -43,51 +45,27 @@ const Product = () => {
   const { loading, products, filteredProductsCount, resultPerPage } =
     useSelector(selectAllProducts);
   const { categories } = useSelector(selectAllCategories);
+  console.log(products);
 
+  // Search
   const handleSearch = (e) => {
     setSearch(e.target.value);
     setCurrentPage(1);
-    dispatch(resetProducts());
   };
   // Price
   const priceHandler = (e, newPriceRange) => {
     setPriceRange(newPriceRange);
     setCurrentPage(1);
-    dispatch(resetProducts());
   };
   // rating
   const ratingHandler = (e) => {
     setRatingsFilter(e.target.value);
-    dispatch(resetProducts());
   };
   const handleListItemClick = (event, index, id) => {
     setSelectedIndex(index);
     setCategory(id);
     setCurrentPage(1);
-    dispatch(resetProducts());
   };
-  // infinite scrolling
-  //  useRef được sử dụng để tạo một biến tham chiếu để lưu trữ một đối tượng IntersectionObserver.
-  const observe = useRef();
-  const lastElementRef = useCallback(
-    (lastElement) => {
-      if (loading) return;
-      if (observe.current) observe.current.disconnect();
-      observe.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasMorepage) {
-          setCurrentPage((prev) => prev + 1);
-        }
-      });
-      if (lastElement) observe.current.observe(lastElement);
-    },
-    [loading, hasMorepage]
-  );
-  console.log(products);
-
-  useEffect(() => {
-    dispatch(resetProducts());
-  }, [dispatch]);
-
   // useEffect
   useEffect(() => {
     dispatch(getCategories({ toast }));
@@ -105,17 +83,6 @@ const Product = () => {
       promise.abort();
     };
   }, [dispatch, search, priceRange, ratingsfilter, category, currentPage]);
-
-  useEffect(() => {
-    if (filteredProductsCount && resultPerPage) {
-      // làm tròn số đến số nguyên lớn nhất tiếp theo
-      setHasMorepage(
-        Math.ceil(filteredProductsCount / resultPerPage) > currentPage
-      );
-    }
-  }, [filteredProductsCount, resultPerPage, currentPage]);
-
-  // Search
 
   return (
     <Box className="wrapper">
@@ -267,17 +234,9 @@ const Product = () => {
         </Typography>
         <Box className="card-container">
           {products &&
-            products.map((product, index) =>
-              products.length === index + 1 ? (
-                <ProductCard
-                  ref={lastElementRef}
-                  product={product}
-                  key={product._id}
-                />
-              ) : (
-                <ProductCard product={product} key={product._id} />
-              )
-            )}
+            products.map((product, index) => (
+              <ProductCard product={product} key={product._id} />
+            ))}
         </Box>
 
         {loading && (
@@ -288,9 +247,19 @@ const Product = () => {
           </Box>
         )}
         {/* Pagination */}
+        <Stack spacing={2}>
+          <Pagination
+            count={Math.ceil(filteredProductsCount / resultPerPage)}
+            page={currentPage}
+            onChange={(e, v) => setCurrentPage(v)}
+            color="primary"
+            showFirstButton
+            showLastButton
+          />
+        </Stack>
       </Box>
     </Box>
   );
 };
 
-export default Product;
+export default ProductsWithPagination;
