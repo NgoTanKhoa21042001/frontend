@@ -156,6 +156,9 @@ export const updateUserRole = createAsyncThunk(
   }
 );
 
+// - Hàm createSlice được sử dụng để tạo ra một slice, với tên là "auth" và trạng thái ban đầu là một object có hai thuộc tính: mutationResult và credentials.
+//- mutationResult là một object chứa thông tin về kết quả của mutation (một thao tác thay đổi trạng thái) liên quan đến xác thực, với giá trị ban đầu là success: false.
+//- credentials là một object chứa thông tin về thông tin xác thực, chưa có giá trị ban đầu.
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -168,6 +171,10 @@ const authSlice = createSlice({
   reducers: {
     resetMutationResult: (state, action) => {
       state.mutationResult.success = false;
+    },
+    refreshUserDetails: (state, action) => {
+      state.credentials.accessToken = action.payload.accessToken;
+      state.credentials.user = action.payload.user;
     },
   },
   extraReducers: {
@@ -286,5 +293,5 @@ export const selectLoggedInUser = (state) => state.auth.credentials;
 export const selectUserList = (state) => state.auth.userlist;
 export const selectUserDetails = (state) => state.auth.userDetails;
 
-export const { resetMutationResult } = authSlice.actions;
+export const { resetMutationResult, refreshUserDetails } = authSlice.actions;
 export default authSlice.reducer;

@@ -102,6 +102,7 @@ const Product = () => {
       })
     );
     return () => {
+      //hàm promise.abort() được sử dụng để hủy bỏ request lấy dữ liệu sản phẩm nếu component bị unmount trước khi request hoàn thành.
       promise.abort();
     };
   }, [dispatch, search, priceRange, ratingsfilter, category, currentPage]);

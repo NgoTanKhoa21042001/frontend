@@ -1,5 +1,8 @@
 import axios from "axios";
 import { BASEURL } from "../constants/baseUrl";
+import { axiosPublic } from "./axiosPublic";
+import { refreshUserDetails } from "./features/authSlice";
+
 let store;
 
 export const injectStore = (_store) => {
@@ -26,6 +29,23 @@ axiosPrivate.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error)
+);
+axiosPrivate.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const prevRequest = error?.config;
+    if (error?.response?.status === 403 && !prevRequest?.sent) {
+      prevRequest.sent = true;
+      const { data } = await axiosPublic.get(`/refresh`);
+      await store.dispatch(refreshUserDetails(data));
+      const accessToken = store?.getState()?.auth?.credentials?.accessToken;
+      if (accessToken) {
+        prevRequest.headers["Authorization"] = `Bearer ${data.accessToken}`;
+      }
+      return axiosPrivate(prevRequest);
+    }
+    return Promise.reject(error);
+  }
 );
 
 export default axiosPrivate;
