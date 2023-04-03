@@ -166,10 +166,16 @@ const authSlice = createSlice({
     credentials: {},
     userlist: { users: [] },
     userDetails: { user: [] },
+    persist: JSON.parse(localStorage.getItem("persist")) || false,
   },
   //  reducers là một object chứa các hàm reducer để thay đổi trạng thái của slice. Trong trường hợp này, chỉ có một hàm resetMutationResult, có tác dụng đặt lại giá trị success của mutationResult về false.
+  // Reducer là một hàm được sử dụng để xử lý các hành động (actions) và cập nhật state của ứng dụng
   reducers: {
-    resetMutationResult: (state, action) => {
+    persistLogin: (state, action) => {
+      state.persist = action.payload;
+      localStorage.setItem("persist", action.payload);
+    },
+    resetMutationResult: (state) => {
       state.mutationResult.success = false;
     },
     refreshUserDetails: (state, action) => {
@@ -293,5 +299,10 @@ export const selectLoggedInUser = (state) => state.auth.credentials;
 export const selectUserList = (state) => state.auth.userlist;
 export const selectUserDetails = (state) => state.auth.userDetails;
 
-export const { resetMutationResult, refreshUserDetails } = authSlice.actions;
+export const selectPersist = (state) => state.auth;
+
+export const { resetMutationResult, refreshUserDetails, persistLogin } =
+  authSlice.actions;
 export default authSlice.reducer;
+
+// Selector là một hàm được sử dụng để truy xuất dữ liệu từ store của ứng dụng. Trong đoạn mã này, selector được định nghĩa là một hàm có tên là selectLoggedInUser, nhận vào một đối tượng state là tham số và trả về thuộc tính credentials của state.auth. Điều này có nghĩa là khi được gọi, selector này sẽ trả về thông tin về người dùng đã đăng nhập được lưu trữ trong thuộc tính credentials của state.auth. Selector này có thể được sử dụng trong các thành phần của ứng dụng để truy xuất thông tin người dùng đã đăng nhập một cách dễ dàng và linh hoạt.

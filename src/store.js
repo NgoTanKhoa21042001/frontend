@@ -9,6 +9,7 @@ import ReviewReducer from "./redux/features/reviewSlice";
 import ShippingReducer from "./redux/features/shippingSlice";
 import OrderReducer from "./redux/features/orderSlice";
 export default configureStore({
+  //reducers được sử dụng để quản lý state của ứng dụng
   reducer: {
     auth: AuthReducer,
     brand: BrandReducer,

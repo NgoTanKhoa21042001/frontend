@@ -39,9 +39,42 @@ import ReviewList from "./components/Authorized/Review/ReviewList";
 import UserList from "./components/Authorized/User/UserList";
 import UpdateRole from "./components/Authorized/User/UpdateRole";
 import Home from "./components/Home/Home";
-
+import Unauthorized from "./components/Error/Unauthorized";
+import notfound from "./images/notfound.svg";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  refreshUserDetails,
+  selectLoggedInUser,
+  selectPersist,
+} from "./redux/features/authSlice";
+import { useEffect, useState } from "react";
+import { axiosPublic } from "./redux/axiosPublic";
+import { Box } from "@mui/system";
+import BoxShadowLoader from "./components/Skeletons/BoxShadowLoader";
 function App() {
-  return (
+  const dispatch = useDispatch();
+  const { accessToken } = useSelector(selectLoggedInUser);
+  const { persist } = useSelector(selectPersist);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    let isMounted = true;
+    const verifyRefreshToken = async () => {
+      try {
+        const { data } = await axiosPublic.get(`/refresh`);
+        dispatch(refreshUserDetails(data));
+      } catch (error) {
+        console.log(error);
+      } finally {
+        isMounted && setIsLoading(false);
+      }
+    };
+    !accessToken && persist ? verifyRefreshToken() : setIsLoading(false);
+    return () => (isMounted = false);
+  }, [accessToken, dispatch, persist]);
+
+  return isLoading ? (
+    <BoxShadowLoader />
+  ) : (
     <div className="App">
       {/* toasity  */}
       <ToastContainer
@@ -96,8 +129,18 @@ function App() {
               <Route path="reviewlist" element={<ReviewList />} />
               <Route path="userlist" element={<UserList />} />
               <Route path="user/:id" element={<UpdateRole />} />
+
+              <Route path="unauthorized" element={<Unauthorized />} />
             </Route>
           </Route>
+          <Route
+            path="*"
+            element={
+              <div style={{ textAlign: "center" }}>
+                <img src={notfound} alt="not found" width={400} />
+              </div>
+            }
+          />
         </Route>
       </Routes>
     </div>

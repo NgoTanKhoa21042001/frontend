@@ -16,7 +16,11 @@ import {
   Link,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { login, selectLoggedInUser } from "../../redux/features/authSlice";
+import {
+  login,
+  persistLogin,
+  selectLoggedInUser,
+} from "../../redux/features/authSlice";
 const Login = () => {
   const location = useLocation();
   let path = "/";
@@ -31,7 +35,7 @@ const Login = () => {
   const [checked, setChecked] = useState(false);
   const handleKeepMeLoggedIn = async (e) => {
     setChecked(!checked);
-    //   dispatch(persistLogin(!checked));
+    dispatch(persistLogin(!checked));
   };
   const handleSubmit = (e) => {
     e.preventDefault();
